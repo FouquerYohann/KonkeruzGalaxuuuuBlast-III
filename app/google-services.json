@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "490869652738",
+    "firebase_url": "https://konkeruzgalaxuuuublast-iii.firebaseio.com",
+    "project_id": "konkeruzgalaxuuuublast-iii",
+    "storage_bucket": "konkeruzgalaxuuuublast-iii.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:490869652738:android:deb8b8d667314ed7",
+        "android_client_info": {
+          "package_name": "com.example.yfouquer.konkeruzgalaxuuuublast_iii"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "490869652738-es4apdvohploqa00s75fpsehl6nma300.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDmfYzKHJOPEUCqVDqYRMFJCJksdT2A5Sc"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
