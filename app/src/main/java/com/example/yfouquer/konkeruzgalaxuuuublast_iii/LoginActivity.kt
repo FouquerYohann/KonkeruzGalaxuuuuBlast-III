@@ -5,20 +5,13 @@ import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.text.TextUtils
-import android.util.Log
-import android.widget.ProgressBar
 import android.widget.Toast
+import com.example.yfouquer.konkeruzgalaxuuuublast_iii.Tools.DataBaseTools.mAuth
 import com.example.yfouquer.konkeruzgalaxuuuublast_iii.R.layout.activity_login
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.database.DatabaseReference
-import com.google.firebase.database.FirebaseDatabase
+import com.example.yfouquer.konkeruzgalaxuuuublast_iii.Tools.DataBaseTools
 import kotlinx.android.synthetic.main.activity_login.*
 
 class LoginActivity : AppCompatActivity() {
-
-    private var mDataBaseReference: DatabaseReference? = null
-    private var mDataBase: FirebaseDatabase? = null
-    private var mAuth: FirebaseAuth? = null
 
     private var mProgressBar: ProgressDialog? = null
 
@@ -28,15 +21,13 @@ class LoginActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(activity_login)
-
-        mDataBase = FirebaseDatabase.getInstance()
-        mDataBaseReference = mDataBase!!.getReference("konkeruzgalaxuuuublast-iii")
-        mAuth = FirebaseAuth.getInstance()
-
         mProgressBar = ProgressDialog(this)
 
+        DataBaseTools.testing
         register_button.setOnClickListener { login_register(false) }
         sign_in_button.setOnClickListener { login_register(true) }
+        access.setOnClickListener { startActivity(Intent(this,MainActivity::class.java)) }
+        DataBaseTools.data(applicationContext)
     }
 
     private fun login_register(login: Boolean) {
@@ -68,7 +59,14 @@ class LoginActivity : AppCompatActivity() {
             mAuth!!.createUserWithEmailAndPassword(mEmail, mPassword).addOnCompleteListener { task ->
                 mProgressBar!!.hide()
                 if (task.isSuccessful) {
-                    val uid = mAuth!!.uid
+
+                    if (mAuth == null) {
+                        println("mAuth = null")
+                    }else{
+                        println("mAuth = ${mAuth}")
+                    }
+
+                    DataBaseTools.mAuth = mAuth
                     Toast.makeText(this, "Register Successfully", Toast.LENGTH_LONG).show()
                 } else {
                     Toast.makeText(this, "Registration Failed", Toast.LENGTH_SHORT).show()
