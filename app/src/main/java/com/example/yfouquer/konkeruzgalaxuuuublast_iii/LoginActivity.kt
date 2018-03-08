@@ -23,11 +23,14 @@ class LoginActivity : AppCompatActivity() {
         setContentView(activity_login)
         mProgressBar = ProgressDialog(this)
 
-        DataBaseTools.testing
         register_button.setOnClickListener { login_register(false) }
         sign_in_button.setOnClickListener { login_register(true) }
-        access.setOnClickListener { startActivity(Intent(this,MainActivity::class.java)) }
-        DataBaseTools.data(applicationContext)
+        access.setOnClickListener { startActivity(Intent(this,GameActivity::class.java)) }
+        DataBaseTools.buildingData(applicationContext)
+        DataBaseTools.defenseData(applicationContext)
+        DataBaseTools.shipData(applicationContext)
+        DataBaseTools.techData(applicationContext)
+
     }
 
     private fun login_register(login: Boolean) {
@@ -50,7 +53,7 @@ class LoginActivity : AppCompatActivity() {
                 mProgressBar!!.hide()
                 if (task.isSuccessful) {
                     Toast.makeText(this, "Sign in Successfully", Toast.LENGTH_LONG).show()
-                    startActivity(Intent(this,MainActivity::class.java))
+                    startActivity(Intent(this,GameActivity::class.java))
                 } else {
                     Toast.makeText(this, "Sign in Failed", Toast.LENGTH_SHORT).show()
                 }
