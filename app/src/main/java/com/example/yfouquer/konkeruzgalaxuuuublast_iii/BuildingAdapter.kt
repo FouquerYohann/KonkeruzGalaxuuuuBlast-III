@@ -6,15 +6,14 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.example.yfouquer.konkeruzgalaxuuuublast_iii.Data.UserData
 import com.example.yfouquer.konkeruzgalaxuuuublast_iii.R.layout.view_row
-import com.example.yfouquer.konkeruzgalaxuuuublast_iii.Tools.DataBaseTools
 import com.example.yfouquer.konkeruzgalaxuuuublast_iii.Tools.StaticType
-import com.example.yfouquer.konkeruzgalaxuuuublast_iii.Tools.StaticType.BuildData
 import kotlinx.android.synthetic.main.view_row.view.*
 import java.io.File
 import java.io.FileInputStream
 
-class BuildingAdapter(private var mDataset: List<StaticType.Data>, private val applicationContext: Context) :
+class BuildingAdapter(private var planet: Int,private var mDataset: List<StaticType.Data>, private val applicationContext: Context) :
         RecyclerView.Adapter<BuildingAdapter.ViewHolder>() {
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
@@ -24,8 +23,11 @@ class BuildingAdapter(private var mDataset: List<StaticType.Data>, private val a
         val btc = mDataset[position].cost.base.btc
         val eth = mDataset[position].cost.base.eth
         holder.image.setImageBitmap(decodeStream)
-        holder.text.text = mDataset[position].name
-        holder.button.text = "Btc : " + btc + "\n Cristal : " + eth
+
+        val level = UserData.getLevel(planet, mDataset[position], position)
+
+        holder.text.text = "${mDataset[position].name} \n Level: $level"
+        holder.button.text = "BTC : $btc \n ETH : $eth"
     }
 
     override fun getItemCount(): Int {

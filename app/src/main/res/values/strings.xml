@@ -17,4 +17,9 @@
     </string>
     <string name="image_du_batiment">image du batiment</string>
     <string name="imagesDir">imagesDir</string>
+    <string name="btc">Bitcoin</string>
+    <string name="eth">Ethereum</string>
+    <string name="planet_desc">planet image</string>
+    <string name="btc_desc">btc description</string>
+    <string name="planetsss">Ma Little Big Planet</string>
 </resources>

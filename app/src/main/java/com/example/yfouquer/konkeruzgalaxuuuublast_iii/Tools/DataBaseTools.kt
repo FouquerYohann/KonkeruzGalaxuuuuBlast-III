@@ -1,8 +1,11 @@
 package com.example.yfouquer.konkeruzgalaxuuuublast_iii.Tools
 
 import android.content.Context
+import android.os.Build
+import android.support.annotation.RequiresApi
 import android.util.Log
 import com.example.yfouquer.konkeruzgalaxuuuublast_iii.Data.GameData
+import com.example.yfouquer.konkeruzgalaxuuuublast_iii.Data.UserData
 import com.example.yfouquer.konkeruzgalaxuuuublast_iii.Tools.StaticType.BuildData
 import com.example.yfouquer.konkeruzgalaxuuuublast_iii.Tools.StaticType.Cost
 import com.example.yfouquer.konkeruzgalaxuuuublast_iii.Tools.StaticType.CostBase
@@ -13,13 +16,19 @@ import com.example.yfouquer.konkeruzgalaxuuuublast_iii.Tools.StaticType.ShipData
 import com.example.yfouquer.konkeruzgalaxuuuublast_iii.Tools.StaticType.ShipStats
 import com.example.yfouquer.konkeruzgalaxuuuublast_iii.Tools.StaticType.TechData
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.UserInfo
 import com.google.firebase.database.*
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
 import java.io.File
 import java.io.FileOutputStream
+import java.time.Instant
+import java.time.LocalDateTime
+import java.time.ZoneId
+import java.util.*
 
 object DataBaseTools {
+
     var mDataBase: FirebaseDatabase = FirebaseDatabase.getInstance()
     var mDataBaseReference: DatabaseReference = mDataBase.reference
     var mStorageInst: FirebaseStorage = FirebaseStorage.getInstance()
@@ -58,6 +67,9 @@ object DataBaseTools {
             dir.mkdir()
         }
         val imgFile = File(dir, image)
+        if (imgFile.exists() && imgFile.lastModified() + 24*3600*1000 > System.currentTimeMillis()) {
+            return
+        }
         referenceFromUrl.getBytes(1024 * 1024).addOnSuccessListener { bytes ->
             FileOutputStream(imgFile).write(bytes)
             Log.i("DownImage", image + " finished at " + imgFile.canonicalFile)
@@ -100,10 +112,10 @@ object DataBaseTools {
                     val cB = makeCostBase(ds.child("cost"))
                     val defStats = makeDefStat(ds.child("stats"))
                     val techs = ds.child("techs").children.map {
-                        Pair(Integer.parseInt(it.key), it.value as Long)
+                        Pair(it.key.toInt(), it.value as Long)
                     }.toCollection(mutableListOf())
                     dowloadImage(applicationContext, image, imageRef)
-                    GameData.add(DefData(name, desc, image, defStats, Cost(cB,null), techs))
+                    GameData.add(DefData(name, desc, image, defStats, Cost(cB, null), techs))
                 }
             }
 
@@ -143,10 +155,10 @@ object DataBaseTools {
                     val cB = makeCostBase(ds.child("cost"))
                     val stats = makeShipStat(ds.child("stats"))
                     val techs = ds.child("techs").children.map {
-                        Pair(Integer.parseInt(it.key), it.value as Long)
+                        Pair(it.key.toInt(), it.value as Long)
                     }.toCollection(mutableListOf())
                     dowloadImage(applicationContext, image, imageRef)
-                    GameData.add(ShipData(name, desc, image, stats, Cost(cB,null), techs))
+                    GameData.add(ShipData(name, desc, image, stats, Cost(cB, null), techs))
                 }
             }
 
@@ -155,6 +167,54 @@ object DataBaseTools {
 
             }
         })
+    }
+
+
+    fun userData(userId: String) {
+        mDataBaseReference.child("users/$userId").addListenerForSingleValueEvent(object :
+                ValueEventListener {
+            override fun onDataChange(dataSnapshot: DataSnapshot) {
+                val info = infofrom(dataSnapshot.child("info"))
+                val planets = planets(dataSnapshot.child("planets"))
+                val techs = dataSnapshot.child("technologies").children.map {
+                    Pair(it.key.toInt(), it.value as Long)
+                }.toCollection(mutableListOf())
+                UserData.info = info
+                UserData.planets = planets
+                UserData.techs = techs
+            }
+
+            override fun onCancelled(dError: DatabaseError?) {
+                println("loadPost:onCancelled ${dError?.toException()}")
+            }
+        })
+    }
+
+    private fun planets(child: DataSnapshot): MutableList<StaticType.PlanetData>{
+       return  child.children.map {
+            val name = it.child("name").value.toString()
+            val batiments = it.child("batiments").children.map {
+                Pair(it.key.toInt(), it.value as Long)
+            }.toCollection(mutableListOf())
+            val planetCoord = StaticType.PlanetCoord(
+                    (it.child("coord/pos").value as Long).toInt(),
+                    (it.child("coord/sys").value as Long).toInt())
+            val defenses = it.child("defenses").children.map {
+                Pair(it.key.toInt(),it.value as Long)
+            }.toCollection(mutableListOf())
+            val resource = StaticType.PlanetRessource(
+                    it.child("ressources/btc").value as Long,
+                    it.child("ressources/eth").value as Long)
+            val ships = it.child("ships").children.map {
+                Pair<Int,Long>(it.key.toInt(),it.value as Long)
+            }.toCollection(mutableListOf())
+            val size = (it.child("size").value as Long).toInt()
+            StaticType.PlanetData(name, size, resource, batiments, planetCoord, defenses, ships)
+        }.toCollection(mutableListOf())
+    }
+
+    private fun infofrom(ds: DataSnapshot): StaticType.UserInfo {
+        return StaticType.UserInfo(ds.child("lastConnection").value as Long, ds.child("pseudo").value as String)
     }
 
 }

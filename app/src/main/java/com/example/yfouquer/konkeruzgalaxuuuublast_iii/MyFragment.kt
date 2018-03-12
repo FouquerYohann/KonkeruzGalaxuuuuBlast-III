@@ -35,7 +35,6 @@ class MyFragment: Fragment() {
         super.onAttach(context)
     }
 
-    @RequiresApi(Build.VERSION_CODES.M)
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         val view = inflater!!.inflate(R.layout.my_fragment, container, false)
@@ -46,7 +45,8 @@ class MyFragment: Fragment() {
         val recyclerView = view.findViewById<RecyclerView>(R.id.recycler_view)
 
         recyclerView.layoutManager = LinearLayoutManager(activity)
-        recyclerView.adapter = BuildingAdapter(listData!!,activity)
+        //TODO add planet number
+        recyclerView.adapter = BuildingAdapter(0, listData!!,activity)
         return view
     }
 

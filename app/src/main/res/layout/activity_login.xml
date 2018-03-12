@@ -36,6 +36,7 @@
 
                 <AutoCompleteTextView
                     android:id="@+id/email"
+                    android:text="yohann.fouquer@gmail.com"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/prompt_email"
@@ -51,6 +52,7 @@
 
                 <EditText
                     android:id="@+id/password"
+                    android:text="yohann"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/prompt_password"
@@ -89,11 +91,6 @@
 
             </LinearLayout>
 
-            <Button
-                android:id="@+id/access"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="tmpAccess" />
         </LinearLayout>
 
 

@@ -1,5 +1,7 @@
 package com.example.yfouquer.konkeruzgalaxuuuublast_iii.Tools
 
+import android.nfc.tech.TagTechnology
+
 /**
  * Created by yfouquer on 06/03/18.
  */
@@ -14,7 +16,7 @@ object StaticType {
         abstract val name: String
         abstract val description: String
         abstract val image: String
-        abstract val cost : Cost
+        abstract val cost: Cost
     }
 
     data class BuildData(override val name: String, override val description: String,
@@ -31,4 +33,17 @@ object StaticType {
     data class TechData(override val name: String, override val description: String,
                         override val image: String, override val cost: Cost) : Data()
 
+
+    data class PlanetCoord(val pos: Int, val system: Int)
+    data class PlanetRessource(val btc: Long, val eth: Long)
+
+    data class PlanetData(val name: String, val size: Int, val ressource: PlanetRessource,
+                          val batiments: List<Pair<Int, Long>>, val coord: PlanetCoord,
+                          val defenses: List<Pair<Int, Long>>, val ships: List<Pair<Int, Long>>)
+
+    data class UserInfo(val lastConnnection: Long, val pseudo: String)
+
+
+    data class UserData(val userInfo: UserInfo, val planets: List<PlanetData>,
+                        val technologies: List<Pair<Int, Long>>)
 }
