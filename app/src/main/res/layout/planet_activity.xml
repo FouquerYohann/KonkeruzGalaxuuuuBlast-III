@@ -1,103 +1,101 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
 
 
     <TextView
-        android:id="@+id/title_for_constraint"
-        android:layout_width="match_parent"
+        android:id="@+id/title_planet"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:text="@string/planetsss"
         android:textAlignment="center"
         android:textColor="#FF69B4"
-        android:textSize="30dp"
-        app:layout_constraintBottom_toTopOf="@+id/planetView"
-        app:layout_constraintVertical_chainStyle="packed" />
+        android:textSize="20sp" />
 
-    <ImageView
-        android:id="@+id/planetView"
-        android:layout_width="368dp"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:contentDescription="@string/planet_desc"
-        app:layout_constraintBottom_toTopOf="@+id/tableLayout"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/title_for_constraint"
-        app:srcCompat="@drawable/antoine_mini" />
-
-    <TableLayout
-        android:id="@+id/tableLayout"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/planetView">
+        android:layout_height="wrap_content">
 
-        <TableRow
-            android:layout_width="match_parent"
+        <ImageView
+            android:id="@+id/planetView"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
-            android:layout_height="match_parent">
+            android:layout_marginBottom="8dp"
+            android:contentDescription="@string/planet_desc"
+            app:srcCompat="@drawable/antoine_mini" />
 
-            <ImageView
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_marginEnd="8dp"
-                android:layout_marginStart="8dp"
-                android:layout_weight="1"
-                android:contentDescription="@string/btc_desc"
-                app:srcCompat="@drawable/btc_icon" />
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="3"
-                android:text="@string/btc"
-                android:textAlignment="center" />
-
-            <TextView
-                android:id="@+id/btc"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="3"
-                android:text="Not here Yet"
-                android:textAlignment="center" />
-        </TableRow>
-
-        <TableRow
+        <TableLayout
+            android:id="@+id/tableLayout"
             android:layout_width="match_parent"
-            android:layout_marginTop="8dp"
-            android:layout_height="match_parent">
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp">
 
-            <ImageView
-                android:layout_width="0dp"
+            <TableRow
+                android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginEnd="8dp"
-                android:layout_marginStart="8dp"
-                android:layout_weight="1"
-                android:contentDescription="@string/planet_desc"
-                app:srcCompat="@drawable/eth_icon" />
+                android:layout_marginTop="8dp">
 
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="3"
-                android:text="@string/eth"
-                android:textAlignment="center" />
+                <ImageView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginStart="8dp"
+                    android:layout_weight="1"
+                    android:contentDescription="@string/btc_desc"
+                    app:srcCompat="@drawable/btc_icon" />
 
-            <TextView
-                android:id="@+id/eth"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="3"
-                android:text="Not here yet"
-                android:textAlignment="center" />
-        </TableRow>
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="3"
+                    android:text="@string/btc"
+                    android:textAlignment="center" />
 
-    </TableLayout>
-</android.support.constraint.ConstraintLayout>
+                <TextView
+                    android:id="@+id/btc"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="3"
+                    android:text="Not here Yet"
+                    android:textAlignment="center" />
+            </TableRow>
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="8dp">
+
+                <ImageView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginStart="8dp"
+                    android:layout_weight="1"
+                    android:contentDescription="@string/planet_desc"
+                    app:srcCompat="@drawable/eth_icon" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="3"
+                    android:text="@string/eth"
+                    android:textAlignment="center" />
+
+                <TextView
+                    android:id="@+id/eth"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="3"
+                    android:text="Not here yet"
+                    android:textAlignment="center" />
+            </TableRow>
+
+        </TableLayout>
+    </LinearLayout>
+</LinearLayout>

@@ -23,8 +23,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".GameActivity"/>
-        <activity android:name=".PlanetActivity" />
+        <activity android:name=".Constructions.ConstructionActivity"/>
+        <activity android:name=".Planets.PlanetActivity" />
     </application>
 
 </manifest>

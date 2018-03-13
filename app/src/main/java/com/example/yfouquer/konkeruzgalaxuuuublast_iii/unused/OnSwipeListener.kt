@@ -1,4 +1,4 @@
-package com.example.yfouquer.konkeruzgalaxuuuublast_iii
+package com.example.yfouquer.konkeruzgalaxuuuublast_iii.unused
 
 import android.content.Context
 import android.view.GestureDetector

@@ -1,4 +1,4 @@
-package com.example.yfouquer.konkeruzgalaxuuuublast_iii
+package com.example.yfouquer.konkeruzgalaxuuuublast_iii.Constructions
 
 import android.content.Context
 import android.graphics.BitmapFactory
@@ -13,15 +13,15 @@ import kotlinx.android.synthetic.main.view_row.view.*
 import java.io.File
 import java.io.FileInputStream
 
-class BuildingAdapter(private var planet: Int,private var mDataset: List<StaticType.Data>, private val applicationContext: Context) :
-        RecyclerView.Adapter<BuildingAdapter.ViewHolder>() {
+class BuildingAdapter(private var planet: Int, private var mDataset: List<StaticType.Data>, private val applicationContext: Context) :
+        RecyclerView.Adapter<BuildingAdapter.ConstructionViewHolder>() {
 
-    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: ConstructionViewHolder, position: Int) {
         val dir = applicationContext.getDir("imagesDir",Context.MODE_PRIVATE)
         val file = File(dir, mDataset[position].image)
         val decodeStream = BitmapFactory.decodeStream(FileInputStream(file))
-        val btc = mDataset[position].cost.base.btc
-        val eth = mDataset[position].cost.base.eth
+        val btc = mDataset[position].cost.btc
+        val eth = mDataset[position].cost.eth
         holder.image.setImageBitmap(decodeStream)
 
         val level = UserData.getLevel(planet, mDataset[position], position)
@@ -34,12 +34,12 @@ class BuildingAdapter(private var planet: Int,private var mDataset: List<StaticT
         return mDataset.size
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ConstructionViewHolder {
         val v = LayoutInflater.from(parent.context).inflate(view_row, parent, false)
-        return ViewHolder(v)
+        return ConstructionViewHolder(v)
     }
 
-    class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+    class ConstructionViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val text = view.textView!!
         val image = view.imageView!!
         val button = view.button!!

@@ -1,4 +1,4 @@
-package com.example.yfouquer.konkeruzgalaxuuuublast_iii
+package com.example.yfouquer.konkeruzgalaxuuuublast_iii.Constructions
 
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentManager
@@ -8,11 +8,11 @@ import com.example.yfouquer.konkeruzgalaxuuuublast_iii.Data.GameData.datas
 /**
  * Created by yfouquer on 08/03/18.
  */
-class GamePageAdapter(fragmentManager: FragmentManager, private val gameData: String) :
+class ConstructionsPageAdapter(val planet:Int,fragmentManager: FragmentManager, private val gameData: String) :
         FragmentStatePagerAdapter(fragmentManager) {
 
     override fun getItem(position: Int): Fragment {
-        return MyFragment.newInstance(gameData).get(position)
+        return ConstructionsFragment.newInstance(planet,gameData).get(planet,position)
     }
 
     override fun getPageTitle(position: Int): CharSequence {
@@ -20,7 +20,7 @@ class GamePageAdapter(fragmentManager: FragmentManager, private val gameData: St
     }
 
     override fun getCount(): Int {
-        return 4
+        return datas.size
     }
 
 

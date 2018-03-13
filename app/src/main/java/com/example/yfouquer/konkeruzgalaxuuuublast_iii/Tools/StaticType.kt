@@ -1,14 +1,10 @@
 package com.example.yfouquer.konkeruzgalaxuuuublast_iii.Tools
 
-import android.nfc.tech.TagTechnology
-
 /**
  * Created by yfouquer on 06/03/18.
  */
 object StaticType {
-    data class Cost(val base: CostBase, val level: CostLevel?)
-    data class CostBase(val btc: Long, val eth: Long)
-    data class CostLevel(val btc: String, val eth: String)
+    data class Cost(val btc: Long, val eth: Long)
     data class ShipStats(val damage: Long, val life: Long, val contenance: Long)
     data class DefStats(val damage: Double, val life: Double, val repair: Double)
 

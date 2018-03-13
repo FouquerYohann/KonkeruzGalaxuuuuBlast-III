@@ -1,31 +1,22 @@
 package com.example.yfouquer.konkeruzgalaxuuuublast_iii.Tools
 
 import android.content.Context
-import android.os.Build
-import android.support.annotation.RequiresApi
 import android.util.Log
 import com.example.yfouquer.konkeruzgalaxuuuublast_iii.Data.GameData
 import com.example.yfouquer.konkeruzgalaxuuuublast_iii.Data.UserData
 import com.example.yfouquer.konkeruzgalaxuuuublast_iii.Tools.StaticType.BuildData
 import com.example.yfouquer.konkeruzgalaxuuuublast_iii.Tools.StaticType.Cost
-import com.example.yfouquer.konkeruzgalaxuuuublast_iii.Tools.StaticType.CostBase
-import com.example.yfouquer.konkeruzgalaxuuuublast_iii.Tools.StaticType.CostLevel
 import com.example.yfouquer.konkeruzgalaxuuuublast_iii.Tools.StaticType.DefData
 import com.example.yfouquer.konkeruzgalaxuuuublast_iii.Tools.StaticType.DefStats
 import com.example.yfouquer.konkeruzgalaxuuuublast_iii.Tools.StaticType.ShipData
 import com.example.yfouquer.konkeruzgalaxuuuublast_iii.Tools.StaticType.ShipStats
 import com.example.yfouquer.konkeruzgalaxuuuublast_iii.Tools.StaticType.TechData
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.UserInfo
 import com.google.firebase.database.*
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
 import java.io.File
 import java.io.FileOutputStream
-import java.time.Instant
-import java.time.LocalDateTime
-import java.time.ZoneId
-import java.util.*
 
 object DataBaseTools {
 
@@ -39,14 +30,6 @@ object DataBaseTools {
     fun nameDescImage(ds: DataSnapshot): Triple<String, String, String> {
         return Triple(ds.child("name").value as String, ds.child("description").value as String,
                 ds.child("image").value as String)
-    }
-
-    fun makeCostBase(ds: DataSnapshot): CostBase {
-        return CostBase(ds.child("btc").value as Long, ds.child("eth").value as Long)
-    }
-
-    fun makeCostLevel(ds: DataSnapshot): CostLevel {
-        return CostLevel(ds.child("btc").value as String, ds.child("eth").value as String)
     }
 
     fun makeDefStat(ds: DataSnapshot): DefStats {
@@ -86,11 +69,12 @@ object DataBaseTools {
                     run {
                         val (name, desc, image) = nameDescImage(ds)
                         val referenceFromUrl = mStorageInst.getReference(image)
-                        val cB = makeCostBase(ds.child("cost/base"))
-                        val cL = makeCostLevel(ds.child("cost/level"))
-
+                        val btc = ds.child("cost/btc").value as Long
+                        val eth = ds.child("cost/eth").value as Long
+//                        val cL = makeCostLevel(ds.child("cost/level"))
+//
                         dowloadImage(applicationContext, image, referenceFromUrl)
-                        GameData.add(BuildData(name, desc, image, Cost(cB, cL)))
+                        GameData.add(BuildData(name, desc, image, Cost(btc,eth)))
                     }
                 })
             }
@@ -109,13 +93,14 @@ object DataBaseTools {
                 dataSnapshot.children.forEach { ds ->
                     val (name, desc, image) = nameDescImage(ds)
                     val imageRef = mStorageInst.getReference(image)
-                    val cB = makeCostBase(ds.child("cost"))
+                    val btc = ds.child("cost/btc").value as Long
+                    val eth = ds.child("cost/eth").value as Long
                     val defStats = makeDefStat(ds.child("stats"))
                     val techs = ds.child("techs").children.map {
                         Pair(it.key.toInt(), it.value as Long)
                     }.toCollection(mutableListOf())
                     dowloadImage(applicationContext, image, imageRef)
-                    GameData.add(DefData(name, desc, image, defStats, Cost(cB, null), techs))
+                    GameData.add(DefData(name, desc, image, defStats, Cost(btc,eth), techs))
                 }
             }
 
@@ -132,10 +117,10 @@ object DataBaseTools {
                 dataSnapshot.children.forEach { ds ->
                     val (name, desc, image) = nameDescImage(ds)
                     val imageRef = mStorageInst.getReference(image)
-                    val cB = makeCostBase(ds.child("cost/base"))
-                    val cL = makeCostLevel(ds.child("cost/level"))
+                    val btc = ds.child("cost/btc").value as Long
+                    val eth = ds.child("cost/eth").value as Long
                     dowloadImage(applicationContext, image, imageRef)
-                    GameData.add(TechData(name, desc, image, Cost(cB, cL)))
+                    GameData.add(TechData(name, desc, image, Cost(btc,eth)))
                 }
             }
 
@@ -152,13 +137,14 @@ object DataBaseTools {
                 dataSnapshot.children.forEach { ds ->
                     val (name, desc, image) = nameDescImage(ds)
                     val imageRef = mStorageInst.getReference(image)
-                    val cB = makeCostBase(ds.child("cost"))
+                    val btc = ds.child("cost/btc").value as Long
+                    val eth = ds.child("cost/eth").value as Long
                     val stats = makeShipStat(ds.child("stats"))
                     val techs = ds.child("techs").children.map {
                         Pair(it.key.toInt(), it.value as Long)
                     }.toCollection(mutableListOf())
                     dowloadImage(applicationContext, image, imageRef)
-                    GameData.add(ShipData(name, desc, image, stats, Cost(cB, null), techs))
+                    GameData.add(ShipData(name, desc, image, stats, Cost(btc,eth), techs))
                 }
             }
 
