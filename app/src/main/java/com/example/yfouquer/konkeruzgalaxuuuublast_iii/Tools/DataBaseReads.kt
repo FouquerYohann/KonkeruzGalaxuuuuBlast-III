@@ -3,6 +3,7 @@ package com.example.yfouquer.konkeruzgalaxuuuublast_iii.Tools
 import android.content.Context
 import android.util.Log
 import com.example.yfouquer.konkeruzgalaxuuuublast_iii.Data.GameData
+import com.example.yfouquer.konkeruzgalaxuuuublast_iii.Data.SuperEnum
 import com.example.yfouquer.konkeruzgalaxuuuublast_iii.Data.UserData
 import com.example.yfouquer.konkeruzgalaxuuuublast_iii.Tools.StaticType.BuildData
 import com.example.yfouquer.konkeruzgalaxuuuublast_iii.Tools.StaticType.Cost
@@ -18,7 +19,7 @@ import com.google.firebase.storage.StorageReference
 import java.io.File
 import java.io.FileOutputStream
 
-object DataBaseTools {
+object DataBaseReads {
 
     var mDataBase: FirebaseDatabase = FirebaseDatabase.getInstance()
     var mDataBaseReference: DatabaseReference = mDataBase.reference
@@ -50,7 +51,7 @@ object DataBaseTools {
             dir.mkdir()
         }
         val imgFile = File(dir, image)
-        if (imgFile.exists() && imgFile.lastModified() + 24*3600*1000 > System.currentTimeMillis()) {
+        if (imgFile.exists() && imgFile.lastModified() + 24 * 3600 * 1000 > System.currentTimeMillis()) {
             return
         }
         referenceFromUrl.getBytes(1024 * 1024).addOnSuccessListener { bytes ->
@@ -74,7 +75,7 @@ object DataBaseTools {
 //                        val cL = makeCostLevel(ds.child("cost/level"))
 //
                         dowloadImage(applicationContext, image, referenceFromUrl)
-                        GameData.add(BuildData(name, desc, image, Cost(btc,eth)))
+                        GameData.add(BuildData(name, desc, image, Cost(btc, eth)))
                     }
                 })
             }
@@ -100,7 +101,7 @@ object DataBaseTools {
                         Pair(it.key.toInt(), it.value as Long)
                     }.toCollection(mutableListOf())
                     dowloadImage(applicationContext, image, imageRef)
-                    GameData.add(DefData(name, desc, image, defStats, Cost(btc,eth), techs))
+                    GameData.add(DefData(name, desc, image, defStats, Cost(btc, eth), techs))
                 }
             }
 
@@ -120,7 +121,7 @@ object DataBaseTools {
                     val btc = ds.child("cost/btc").value as Long
                     val eth = ds.child("cost/eth").value as Long
                     dowloadImage(applicationContext, image, imageRef)
-                    GameData.add(TechData(name, desc, image, Cost(btc,eth)))
+                    GameData.add(TechData(name, desc, image, Cost(btc, eth)))
                 }
             }
 
@@ -144,7 +145,7 @@ object DataBaseTools {
                         Pair(it.key.toInt(), it.value as Long)
                     }.toCollection(mutableListOf())
                     dowloadImage(applicationContext, image, imageRef)
-                    GameData.add(ShipData(name, desc, image, stats, Cost(btc,eth), techs))
+                    GameData.add(ShipData(name, desc, image, stats, Cost(btc, eth), techs))
                 }
             }
 
@@ -176,23 +177,21 @@ object DataBaseTools {
         })
     }
 
-    private fun planets(child: DataSnapshot): MutableList<StaticType.PlanetData>{
-       return  child.children.map {
+    private fun planets(child: DataSnapshot): MutableList<StaticType.PlanetData> {
+        return child.children.map {
             val name = it.child("name").value.toString()
             val batiments = it.child("batiments").children.map {
                 Pair(it.key.toInt(), it.value as Long)
             }.toCollection(mutableListOf())
-            val planetCoord = StaticType.PlanetCoord(
-                    (it.child("coord/pos").value as Long).toInt(),
+            val planetCoord = StaticType.PlanetCoord((it.child("coord/pos").value as Long).toInt(),
                     (it.child("coord/sys").value as Long).toInt())
             val defenses = it.child("defenses").children.map {
-                Pair(it.key.toInt(),it.value as Long)
+                Pair(it.key.toInt(), it.value as Long)
             }.toCollection(mutableListOf())
-            val resource = StaticType.PlanetRessource(
-                    it.child("ressources/btc").value as Long,
+            val resource = StaticType.PlanetRessource(it.child("ressources/btc").value as Long,
                     it.child("ressources/eth").value as Long)
             val ships = it.child("ships").children.map {
-                Pair<Int,Long>(it.key.toInt(),it.value as Long)
+                Pair<Int, Long>(it.key.toInt(), it.value as Long)
             }.toCollection(mutableListOf())
             val size = (it.child("size").value as Long).toInt()
             StaticType.PlanetData(name, size, resource, batiments, planetCoord, defenses, ships)
@@ -200,7 +199,33 @@ object DataBaseTools {
     }
 
     private fun infofrom(ds: DataSnapshot): StaticType.UserInfo {
-        return StaticType.UserInfo(ds.child("lastConnection").value as Long, ds.child("pseudo").value as String)
+        return StaticType.UserInfo(ds.child("lastConnection").value as Long,
+                ds.child("pseudo").value as String)
+    }
+
+
+    fun disableButton() {
+       for(planet in 0..UserData.planets.size){
+        mDataBaseReference.child("users/${UserData.uid}/planets/$planet/construction/")
+                .addListenerForSingleValueEvent(object : ValueEventListener {
+                    override fun onDataChange(p0: DataSnapshot?) {
+                       p0?.children?.forEach {
+                           val superEnum = when (it.key) {
+                               "batiments" -> SuperEnum.BUILDING
+                               "defenses" -> SuperEnum.DEFENSE
+                               "ships" -> SuperEnum.SHIP
+                               else -> null
+                           }
+                           UserData.disableButton[Pair(planet,superEnum!!)] = it.childrenCount != 0L
+                       }
+
+                    }
+                    override fun onCancelled(p0: DatabaseError?) {
+                        Log.e("FireBase", "The read failed: " + p0?.message)
+                    }
+                })
+        }
+
     }
 
 }

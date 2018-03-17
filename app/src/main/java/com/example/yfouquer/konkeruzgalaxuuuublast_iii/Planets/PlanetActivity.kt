@@ -15,7 +15,9 @@ class PlanetActivity : AppCompatActivity(){
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.planet_viewer)
+        setContentView(R.layout.planet_activity)
+
+//        DataBaseReads.disableButton()
 
         val recycle = findViewById<RecyclerView>(R.id.planetListView)
 

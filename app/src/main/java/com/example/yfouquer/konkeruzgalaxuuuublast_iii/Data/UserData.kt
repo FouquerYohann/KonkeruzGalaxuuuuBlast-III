@@ -11,6 +11,8 @@ object UserData {
     lateinit var planets: MutableList<StaticType.PlanetData>
     lateinit var techs: MutableList<Pair<Int, Long>>
 
+    var disableButton: MutableMap<Pair<Int,SuperEnum>,Boolean> = hashMapOf()
+
     fun getLevel(planet: Int, data: StaticType.Data, position: Int): Long {
 
         return when (data) {

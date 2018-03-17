@@ -11,7 +11,7 @@ import com.example.yfouquer.konkeruzgalaxuuuublast_iii.Constructions.Constructio
 import com.example.yfouquer.konkeruzgalaxuuuublast_iii.Data.UserData
 import com.example.yfouquer.konkeruzgalaxuuuublast_iii.R
 import com.example.yfouquer.konkeruzgalaxuuuublast_iii.Tools.StaticType
-import kotlinx.android.synthetic.main.planet_activity.view.*
+import kotlinx.android.synthetic.main.planet_view.view.*
 
 /**
  * Created by yfouquer on 13/03/18.
@@ -19,12 +19,14 @@ import kotlinx.android.synthetic.main.planet_activity.view.*
 class PlanetAdapter(private var planet: MutableList<StaticType.PlanetData>, val applicationContext: Context) :
         RecyclerView.Adapter<PlanetAdapter.PlanetViewHolder>() {
 
-
+    var expandedPosition:Int = -1
+    lateinit var parentGroup: ViewGroup
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PlanetViewHolder {
-        val v = LayoutInflater.from(parent.context).inflate(R.layout.planet_activity, parent, false)
-        return PlanetViewHolder(v,applicationContext)
+        val v = LayoutInflater.from(parent.context).inflate(R.layout.planet_view, parent, false)
+        parentGroup = parent
+        return PlanetViewHolder(v)
     }
 
     override fun getItemCount(): Int {
@@ -42,24 +44,31 @@ class PlanetAdapter(private var planet: MutableList<StaticType.PlanetData>, val 
             else -> R.drawable.antoine_mini
         }
         holder.image.setImageDrawable(applicationContext.resources.getDrawable(imageId, null))
+
+        val isExpanded = position == expandedPosition
+        holder.toHide.visibility = if (isExpanded) View.VISIBLE else View.GONE
+        holder.itemView.isActivated = isExpanded
+        holder.itemView.setOnClickListener({
+            expandedPosition = if(isExpanded) -1 else position
+            notifyItemChanged(position)
+        })
+
+        holder.goToPlanet.setOnClickListener {
+            val intent = Intent(applicationContext, ConstructionActivity::class.java).putExtra(
+                    "planet", position)
+
+            startActivity(applicationContext,intent,null)
+
+        }
+
     }
 
-    class PlanetViewHolder(v: View,val applicationContext: Context) : RecyclerView.ViewHolder(v),View.OnClickListener {
+    class PlanetViewHolder(v: View) : RecyclerView.ViewHolder(v) {
         val name = v.title_planet!!
         val image = v.planetView!!
         val eth = v.eth!!
         val btc = v.btc!!
-
-        init {
-            v.setOnClickListener(this)
-        }
-
-        override fun onClick(p0: View) {
-            val intent = Intent(applicationContext, ConstructionActivity::class.java)
-            intent.putExtra("planet",adapterPosition)
-            startActivity(applicationContext,intent,null)
-        }
-
-
+        val toHide = v.toHide!!
+        val goToPlanet = v.goToPlanet!!
     }
 }

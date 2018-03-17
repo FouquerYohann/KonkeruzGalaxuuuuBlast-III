@@ -24,7 +24,7 @@ class PlanetsFragment :Fragment(){
 
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?,
                               savedInstanceState: Bundle?): View {
-        val view  = inflater!!.inflate(R.layout.planet_activity,container,false)
+        val view  = inflater!!.inflate(R.layout.planet_view,container,false)
         val planet = arguments.getInt("planet")
         val text = view.findViewById<TextView>(R.id.title_planet)
         val btc = view.findViewById<TextView>(R.id.btc)

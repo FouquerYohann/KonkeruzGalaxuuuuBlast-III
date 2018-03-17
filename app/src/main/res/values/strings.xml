@@ -21,5 +21,13 @@
     <string name="eth">Ethereum</string>
     <string name="planet_desc">planet image</string>
     <string name="btc_desc">btc description</string>
-    <string name="planetsss">Ma Little Big Planet</string>
+    <string name="planetsss">Ma Big Planet</string>
+    <string name="batiment_en_cours">Batiment en Cours</string>
+    <string name="recherche_en_cours">Recherche en Cours</string>
+    <string name="vaisseau_en_cours">Vaisseau en Cours</string>
+    <string name="defense_en_cours">defense en Cours</string>
+    <string name="goToPlanet">Go to Planet</string>
+    <string name="descBtc">imageBtc</string>
+    <string name="descEth">descEth</string>
+    <string name="all_my_planet">All my planet</string>
 </resources>

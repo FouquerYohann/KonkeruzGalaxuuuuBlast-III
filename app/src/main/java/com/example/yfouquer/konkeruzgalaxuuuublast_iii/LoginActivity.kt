@@ -10,8 +10,8 @@ import android.widget.Toast
 import com.example.yfouquer.konkeruzgalaxuuuublast_iii.Data.UserData
 import com.example.yfouquer.konkeruzgalaxuuuublast_iii.Planets.PlanetActivity
 import com.example.yfouquer.konkeruzgalaxuuuublast_iii.R.layout.login_activity
-import com.example.yfouquer.konkeruzgalaxuuuublast_iii.Tools.DataBaseTools
-import com.example.yfouquer.konkeruzgalaxuuuublast_iii.Tools.DataBaseTools.mAuth
+import com.example.yfouquer.konkeruzgalaxuuuublast_iii.Tools.DataBaseReads
+import com.example.yfouquer.konkeruzgalaxuuuublast_iii.Tools.DataBaseReads.mAuth
 import com.google.firebase.auth.FirebaseAuth
 import kotlinx.android.synthetic.main.login_activity.*
 
@@ -54,11 +54,11 @@ class LoginActivity : AppCompatActivity() {
                 if (task.isSuccessful) {
                     Toast.makeText(this, "Sign in Successfully", Toast.LENGTH_LONG).show()
                    UserData.uid = FirebaseAuth.getInstance().currentUser!!.uid
-                    DataBaseTools.buildingData(applicationContext)
-                    DataBaseTools.defenseData(applicationContext)
-                    DataBaseTools.shipData(applicationContext)
-                    DataBaseTools.techData(applicationContext)
-                    DataBaseTools.userData(UserData.uid)
+                    DataBaseReads.buildingData(applicationContext)
+                    DataBaseReads.defenseData(applicationContext)
+                    DataBaseReads.shipData(applicationContext)
+                    DataBaseReads.techData(applicationContext)
+                    DataBaseReads.userData(UserData.uid)
                     Handler().postDelayed({
                         val intent = Intent(this, PlanetActivity::class.java)
                         startActivity(intent)
@@ -74,7 +74,7 @@ class LoginActivity : AppCompatActivity() {
                 if (task.isSuccessful) {
                         println("mAuth = ${mAuth}")
 
-                    DataBaseTools.mAuth = mAuth
+                    DataBaseReads.mAuth = mAuth
                     Toast.makeText(this, "Register Successfully", Toast.LENGTH_LONG).show()
                 } else {
                     Toast.makeText(this, "Registration Failed", Toast.LENGTH_SHORT).show()
