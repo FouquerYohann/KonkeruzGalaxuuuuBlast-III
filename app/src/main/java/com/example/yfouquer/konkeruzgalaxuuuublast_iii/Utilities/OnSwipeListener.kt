@@ -1,9 +1,10 @@
-package com.example.yfouquer.konkeruzgalaxuuuublast_iii.unused
+package com.example.yfouquer.konkeruzgalaxuuuublast_iii.Utilities
 
 import android.content.Context
+import android.content.Intent
 import android.view.GestureDetector
 import android.view.MotionEvent
-import android.widget.Toast
+import com.example.yfouquer.konkeruzgalaxuuuublast_iii.Galaxy.SystemActivity
 
 /**
  * Created by yfouquer on 12/03/18.
@@ -26,7 +27,10 @@ class OnSwipeListener(val applicationContext: Context) : GestureDetector.SimpleO
             else -> "RIGHT"
         }
 
-        Toast.makeText(applicationContext,"Swipe "+direction, Toast.LENGTH_LONG).show()
+        if (direction === "LEFT"){
+            applicationContext.startActivities(Array(1,{ Intent(applicationContext,SystemActivity::class.java) }))
+        }
+
         return true
     }
 }

@@ -25,6 +25,7 @@
         </activity>
         <activity android:name=".Constructions.ConstructionActivity"/>
         <activity android:name=".Planets.PlanetActivity" />
+        <activity android:name=".Galaxy.SystemActivity" />
     </application>
 
 </manifest>

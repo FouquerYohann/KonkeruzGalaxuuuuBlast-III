@@ -1,4 +1,4 @@
-package com.example.yfouquer.konkeruzgalaxuuuublast_iii.Planets
+package com.example.yfouquer.konkeruzgalaxuuuublast_iii.unused
 
 import android.os.Bundle
 import android.support.v4.app.Fragment

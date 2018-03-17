@@ -8,6 +8,7 @@ import android.support.v7.app.AppCompatActivity
 import android.text.TextUtils
 import android.widget.Toast
 import com.example.yfouquer.konkeruzgalaxuuuublast_iii.Data.UserData
+import com.example.yfouquer.konkeruzgalaxuuuublast_iii.Galaxy.SystemActivity
 import com.example.yfouquer.konkeruzgalaxuuuublast_iii.Planets.PlanetActivity
 import com.example.yfouquer.konkeruzgalaxuuuublast_iii.R.layout.login_activity
 import com.example.yfouquer.konkeruzgalaxuuuublast_iii.Tools.DataBaseReads

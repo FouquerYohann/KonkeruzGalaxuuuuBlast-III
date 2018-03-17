@@ -20,12 +20,9 @@ class PlanetAdapter(private var planet: MutableList<StaticType.PlanetData>, val 
         RecyclerView.Adapter<PlanetAdapter.PlanetViewHolder>() {
 
     var expandedPosition:Int = -1
-    lateinit var parentGroup: ViewGroup
-
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PlanetViewHolder {
         val v = LayoutInflater.from(parent.context).inflate(R.layout.planet_view, parent, false)
-        parentGroup = parent
         return PlanetViewHolder(v)
     }
 
