@@ -8,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.example.yfouquer.konkeruzgalaxuuuublast_iii.Constructions.ConstructionActivity
+import com.example.yfouquer.konkeruzgalaxuuuublast_iii.Data.GameData
 import com.example.yfouquer.konkeruzgalaxuuuublast_iii.Data.UserData
 import com.example.yfouquer.konkeruzgalaxuuuublast_iii.R
 import com.example.yfouquer.konkeruzgalaxuuuublast_iii.Tools.StaticType
@@ -19,7 +20,7 @@ import kotlinx.android.synthetic.main.planet_view.view.*
 class PlanetAdapter(private var planet: MutableList<StaticType.PlanetData>, val applicationContext: Context) :
         RecyclerView.Adapter<PlanetAdapter.PlanetViewHolder>() {
 
-    var expandedPosition:Int = -1
+    var expandedPosition: Int = -1
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PlanetViewHolder {
         val v = LayoutInflater.from(parent.context).inflate(R.layout.planet_view, parent, false)
@@ -46,15 +47,18 @@ class PlanetAdapter(private var planet: MutableList<StaticType.PlanetData>, val 
         holder.toHide.visibility = if (isExpanded) View.VISIBLE else View.GONE
         holder.itemView.isActivated = isExpanded
         holder.itemView.setOnClickListener({
-            expandedPosition = if(isExpanded) -1 else position
+            expandedPosition = if (isExpanded) -1 else position
             notifyItemChanged(position)
         })
-
+        val buildingId = UserData.planets[position].constructionBat?.id?.toInt()
+        if(buildingId != null) {
+            holder.battencourt.text = GameData.buildings[buildingId].name
+        }
         holder.goToPlanet.setOnClickListener {
             val intent = Intent(applicationContext, ConstructionActivity::class.java).putExtra(
                     "planet", position)
 
-            startActivity(applicationContext,intent,null)
+            startActivity(applicationContext, intent, null)
 
         }
 
@@ -67,5 +71,6 @@ class PlanetAdapter(private var planet: MutableList<StaticType.PlanetData>, val 
         val btc = v.btc!!
         val toHide = v.toHide!!
         val goToPlanet = v.goToPlanet!!
+        val battencourt = v.Battencourt!!
     }
 }

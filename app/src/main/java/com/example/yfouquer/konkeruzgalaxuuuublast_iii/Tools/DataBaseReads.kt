@@ -18,6 +18,7 @@ import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
 import java.io.File
 import java.io.FileOutputStream
+import java.util.AbstractMap
 
 object DataBaseReads {
 
@@ -177,6 +178,19 @@ object DataBaseReads {
         })
     }
 
+    fun autoRefreshUser(userId: String) {
+        mDataBaseReference.child("users/$userId").addValueEventListener(object : ValueEventListener {
+            override fun onCancelled(dError: DatabaseError?) {
+                println("loadPost:onCancelled ${dError?.toException()}")
+
+            }
+
+            override fun onDataChange(p0: DataSnapshot?) {
+                userData(userId)
+            }
+        })
+    }
+
     private fun planets(child: DataSnapshot): MutableList<StaticType.PlanetData> {
         return child.children.map {
             val name = it.child("name").value.toString()
@@ -194,7 +208,40 @@ object DataBaseReads {
                 Pair<Int, Long>(it.key.toInt(), it.value as Long)
             }.toCollection(mutableListOf())
             val size = (it.child("size").value as Long).toInt()
-            StaticType.PlanetData(name, size, resource, batiments, planetCoord, defenses, ships)
+            var constructionShips: StaticType.ConstructionShip? = null
+            var constructionBat: StaticType.ConstructionBat? = null
+            var constructionDef: StaticType.ConstructionDef? = null
+            it.child("construction").children.map {
+                val abstractConstruction = when (it.key) {
+                    "batiments" ->
+                        StaticType.ConstructionBat(it.child("id").value as Long, it.child("since").value as Long)
+                    "defenses" -> StaticType.ConstructionDef(it.child("list").children.map {
+                        it.children.map {
+                            Pair<Int, Long>(it.key.toInt(), it.value as Long)
+                        }.toMap(HashMap<Int, Long>())
+                    }.toList(), it.child("since").value as Long)
+                    "ships" -> StaticType.ConstructionShip(it.child("list").children.map {
+                        it.children.map {
+                            Pair<Int, Long>(it.key.toInt(), it.value as Long)
+                        }.toMap(HashMap<Int, Long>())
+                    }.toList(), it.child("since").value as Long)
+                    else -> null
+
+                }
+
+                when (abstractConstruction) {
+                    is StaticType.ConstructionShip -> {
+                        constructionShips = abstractConstruction
+                    }
+                    is StaticType.ConstructionBat -> {
+                        constructionBat = abstractConstruction
+                    }
+                    is StaticType.ConstructionDef -> {
+                        constructionDef = abstractConstruction
+                    }
+                }
+            }
+            StaticType.PlanetData(name, size, resource, batiments, planetCoord, defenses, ships, constructionBat, constructionShips, constructionDef)
         }.toCollection(mutableListOf())
     }
 
@@ -205,25 +252,26 @@ object DataBaseReads {
 
 
     fun disableButton() {
-       for(planet in 0..UserData.planets.size){
-        mDataBaseReference.child("users/${UserData.uid}/planets/$planet/construction/")
-                .addListenerForSingleValueEvent(object : ValueEventListener {
-                    override fun onDataChange(p0: DataSnapshot?) {
-                       p0?.children?.forEach {
-                           val superEnum = when (it.key) {
-                               "batiments" -> SuperEnum.BUILDING
-                               "defenses" -> SuperEnum.DEFENSE
-                               "ships" -> SuperEnum.SHIP
-                               else -> null
-                           }
-                           UserData.disableButton[Pair(planet,superEnum!!)] = it.childrenCount != 0L
-                       }
+        for (planet in 0..UserData.planets.size) {
+            mDataBaseReference.child("users/${UserData.uid}/planets/$planet/construction/")
+                    .addListenerForSingleValueEvent(object : ValueEventListener {
+                        override fun onDataChange(p0: DataSnapshot?) {
+                            p0?.children?.forEach {
+                                val superEnum = when (it.key) {
+                                    "batiments" -> SuperEnum.BUILDING
+                                    "defenses" -> SuperEnum.DEFENSE
+                                    "ships" -> SuperEnum.SHIP
+                                    else -> null
+                                }
+                                UserData.disableButton[Pair(planet, superEnum!!)] = it.childrenCount != 0L
+                            }
 
-                    }
-                    override fun onCancelled(p0: DatabaseError?) {
-                        Log.e("FireBase", "The read failed: " + p0?.message)
-                    }
-                })
+                        }
+
+                        override fun onCancelled(p0: DatabaseError?) {
+                            Log.e("FireBase", "The read failed: " + p0?.message)
+                        }
+                    })
         }
 
     }

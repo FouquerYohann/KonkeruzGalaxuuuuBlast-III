@@ -35,11 +35,25 @@ object StaticType {
 
     data class PlanetData(val name: String, val size: Int, val ressource: PlanetRessource,
                           val batiments: List<Pair<Int, Long>>, val coord: PlanetCoord,
-                          val defenses: List<Pair<Int, Long>>, val ships: List<Pair<Int, Long>>)
+                          val defenses: List<Pair<Int, Long>>, val ships: List<Pair<Int, Long>>,
+                          val constructionBat: ConstructionBat?,
+                          val constructionShip: ConstructionShip?,
+                          val constructionDef: ConstructionDef?)
 
     data class UserInfo(val lastConnnection: Long, val pseudo: String)
 
 
     data class UserData(val userInfo: UserInfo, val planets: List<PlanetData>,
-                        val technologies: List<Pair<Int, Long>>)
+                        val technologies: List<Pair<Int, Long>>,
+                        val constructionTech: ConstructionTech?)
+
+    abstract class AbstractConstruction {
+        abstract val since: Long
+    }
+
+    data class ConstructionTech(val id: Long, override val since: Long) : AbstractConstruction()
+    data class ConstructionBat(val id: Long, override val since: Long) : AbstractConstruction()
+
+    data class ConstructionDef(val listBuild: List<MutableMap<Int, Long>>, override val since: Long) : AbstractConstruction()
+    data class ConstructionShip(val listBuild: List<MutableMap<Int, Long>>, override val since: Long) : AbstractConstruction()
 }

@@ -34,4 +34,8 @@ object DataBaseWrites {
             SuperEnum.DEFENSE -> refBase.child(ref.toString()).setValue(nb)
         }
     }
+
+    fun setMaj() {
+        databaseReference.child("users/" + UserData.uid + "/info/maj").setValue(true)
+    }
 }

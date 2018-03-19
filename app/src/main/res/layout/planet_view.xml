@@ -113,14 +113,22 @@
             android:id="@+id/enCours">
 
             <TableRow
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp">
 
                 <TextView
-                    android:layout_width="match_parent"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
                     android:layout_height="wrap_content"
                     android:text="@string/batiment_en_cours" />
+
+               <TextView android:layout_width="0dp"
+                   android:id="@+id/Battencourt"
+                   android:layout_weight="1"
+                   android:layout_height="wrap_content"
+                   android:textAlignment="center"
+                   android:text="Liliane" />
             </TableRow>
 
             <TableRow
