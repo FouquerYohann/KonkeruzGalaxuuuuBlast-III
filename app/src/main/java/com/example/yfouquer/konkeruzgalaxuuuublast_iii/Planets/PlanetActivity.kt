@@ -8,7 +8,9 @@ import android.support.v7.widget.RecyclerView
 import android.view.MotionEvent
 import com.example.yfouquer.konkeruzgalaxuuuublast_iii.Data.UserData
 import com.example.yfouquer.konkeruzgalaxuuuublast_iii.R
+import com.example.yfouquer.konkeruzgalaxuuuublast_iii.Tools.DataBaseReads
 import com.example.yfouquer.konkeruzgalaxuuuublast_iii.Utilities.OnSwipeListener
+import kotlinx.android.synthetic.main.planet_activity.*
 
 /**
  * Created by yfouquer on 12/03/18.
@@ -20,6 +22,8 @@ class PlanetActivity : AppCompatActivity(){
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.planet_activity)
+
+
         gestureDetector = GestureDetectorCompat(this, OnSwipeListener(this))
 //        DataBaseReads.disableButton()
 
@@ -27,6 +31,10 @@ class PlanetActivity : AppCompatActivity(){
 
         recycle.layoutManager=LinearLayoutManager(this)
         recycle.adapter= PlanetAdapter(UserData.planets,applicationContext)
+
+        refresh.setOnClickListener {
+            DataBaseReads.userData(UserData.uid)
+        }
     }
 
     override fun onTouchEvent(event: MotionEvent?): Boolean {

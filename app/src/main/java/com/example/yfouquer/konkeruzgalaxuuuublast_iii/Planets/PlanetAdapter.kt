@@ -2,17 +2,21 @@ package com.example.yfouquer.konkeruzgalaxuuuublast_iii.Planets
 
 import android.content.Context
 import android.content.Intent
+import android.databinding.DataBindingUtil
+import android.databinding.ViewDataBinding
 import android.support.v4.content.ContextCompat.startActivity
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.example.yfouquer.konkeruzgalaxuuuublast_iii.BR
 import com.example.yfouquer.konkeruzgalaxuuuublast_iii.Constructions.ConstructionActivity
 import com.example.yfouquer.konkeruzgalaxuuuublast_iii.Data.GameData
 import com.example.yfouquer.konkeruzgalaxuuuublast_iii.Data.SuperEnum
 import com.example.yfouquer.konkeruzgalaxuuuublast_iii.Data.UserData
 import com.example.yfouquer.konkeruzgalaxuuuublast_iii.R
 import com.example.yfouquer.konkeruzgalaxuuuublast_iii.Tools.StaticType
+import com.example.yfouquer.konkeruzgalaxuuuublast_iii.databinding.PlanetViewBinding
 import com.example.yfouquer.konkeruzgalaxuuuublast_iii.Tools.calculEngine
 import kotlinx.android.synthetic.main.planet_view.view.*
 import java.util.*
@@ -23,11 +27,14 @@ import java.util.*
 class PlanetAdapter(private var planet: MutableList<StaticType.PlanetData>, val applicationContext: Context) :
         RecyclerView.Adapter<PlanetAdapter.PlanetViewHolder>() {
 
-    var expandedPosition: Int = -1
+    private var expandedPosition:Int = -1
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PlanetViewHolder {
-        val v = LayoutInflater.from(parent.context).inflate(R.layout.planet_view, parent, false)
-        return PlanetViewHolder(v)
+//        val v = LayoutInflater.from(parent.context).inflate(R.layout.planet_view, parent, false)
+        val inflate = DataBindingUtil.inflate<PlanetViewBinding>(
+                LayoutInflater.from(parent.context), R.layout.planet_view, parent, false)
+
+        return PlanetViewHolder(inflate)
     }
 
     override fun getItemCount(): Int {
@@ -35,9 +42,10 @@ class PlanetAdapter(private var planet: MutableList<StaticType.PlanetData>, val 
     }
 
     override fun onBindViewHolder(holder: PlanetViewHolder, position: Int) {
-        holder.name.text = planet[position].name
-        holder.btc.text = planet[position].ressource.btc.toString()
-        holder.eth.text = planet[position].ressource.eth.toString()
+        holder.bind(UserData.planets[position])
+//        holder.name.text = planet[position].name
+//        holder.btc.text = planet[position].ressource.btc.toString()
+//        holder.eth.text = planet[position].ressource.eth.toString()
         val imageId = when (position) {
             0 -> R.drawable.planet_0
             1 -> R.drawable.planet_1
@@ -71,6 +79,18 @@ class PlanetAdapter(private var planet: MutableList<StaticType.PlanetData>, val 
         }
 
     }
+
+
+    class PlanetViewHolder(private val v: ViewDataBinding) : RecyclerView.ViewHolder(v.root) {
+        val image = v.root.planetView!!
+        val toHide = v.root.toHide!!
+        val goToPlanet = v.root.goToPlanet!!
+
+        fun bind(data: StaticType.PlanetData) {
+            v.setVariable(BR.planet, data)
+            v.executePendingBindings()
+        }
+
 
     private fun formatDate(time: Long): String {
         if(time<0)return " -- s"
