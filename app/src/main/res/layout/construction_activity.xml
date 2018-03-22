@@ -32,11 +32,11 @@
                     android:src="@drawable/btc_icon" />
 
                 <TextView
-                    android:id="@{Long.toString(planet.ressource.btc)}"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="6"
-                    android:gravity="center" />
+                    android:gravity="center"
+                    android:text="@{Long.toString(planet.ressource.btc)}" />
             </LinearLayout>
 
             <LinearLayout
@@ -51,11 +51,11 @@
                     android:src="@drawable/eth_icon" />
 
                 <TextView
-                    android:id="@{Long.toString(planet.ressource.eth)}"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="6"
-                    android:gravity="center" />
+                    android:gravity="center"
+                    android:text="@{Long.toString(planet.ressource.eth)}" />
             </LinearLayout>
 
         </TableRow>

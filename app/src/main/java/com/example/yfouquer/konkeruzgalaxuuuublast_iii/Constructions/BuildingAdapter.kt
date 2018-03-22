@@ -18,7 +18,6 @@ import com.example.yfouquer.konkeruzgalaxuuuublast_iii.Tools.StaticType.BuildDat
 import com.example.yfouquer.konkeruzgalaxuuuublast_iii.Tools.StaticType.DefData
 import com.example.yfouquer.konkeruzgalaxuuuublast_iii.Tools.StaticType.ShipData
 import com.example.yfouquer.konkeruzgalaxuuuublast_iii.Tools.StaticType.TechData
-import com.example.yfouquer.konkeruzgalaxuuuublast_iii.databinding.ConstructionActivityBinding
 import kotlinx.android.synthetic.main.view_row.view.*
 import java.io.File
 import java.io.FileInputStream
@@ -65,7 +64,7 @@ class BuildingAdapter(private var planet: Int, private var mDataset: List<Static
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ConstructionViewHolder {
-        val inflate = DataBindingUtil.inflate<ConstructionActivityBinding>(LayoutInflater.from(parent.context),
+        val inflate = DataBindingUtil.inflate<ViewDataBinding>(LayoutInflater.from(parent.context),
                 view_row, parent, false)
         return ConstructionViewHolder(inflate)
     }
@@ -75,7 +74,7 @@ class BuildingAdapter(private var planet: Int, private var mDataset: List<Static
         val image = v.root.imageView!!
 
         fun bind(data: StaticType.Data) {
-            v.setVariable(BR._all, data)
+            v.setVariable(BR.item, data)
             v.executePendingBindings()
         }
     }

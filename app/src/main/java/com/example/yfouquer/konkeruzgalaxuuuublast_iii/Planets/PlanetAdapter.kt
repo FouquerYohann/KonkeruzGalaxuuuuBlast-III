@@ -98,7 +98,7 @@ class PlanetAdapter(private var planet: MutableList<StaticType.PlanetData>,
         val battencourt = v.root.Battencourt!!
 
         fun bind(data: StaticType.PlanetData) {
-            v.setVariable(BR._all, data)
+            v.setVariable(BR.planet, data)
             v.executePendingBindings()
         }
     }
