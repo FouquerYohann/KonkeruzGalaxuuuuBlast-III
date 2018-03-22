@@ -6,6 +6,7 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.example.yfouquer.konkeruzgalaxuuuublast_iii.Data.SuperEnum
 import com.example.yfouquer.konkeruzgalaxuuuublast_iii.Data.SuperEnum.*
 import com.example.yfouquer.konkeruzgalaxuuuublast_iii.Data.UserData
 import com.example.yfouquer.konkeruzgalaxuuuublast_iii.R.layout.view_row
@@ -31,7 +32,7 @@ class BuildingAdapter(private var planet: Int, private var mDataset: List<Static
         val eth = mDataset[position].cost.eth
         holder.image.setImageBitmap(decodeStream)
 
-        val level = UserData.getLevel(planet, mDataset[position], position)
+        val level = UserData.getLevel(planet, SuperEnum.getEnum(mDataset[position]), position)
 
         holder.text.text = "${mDataset[position].name} \n Level: $level"
         holder.button.text = "BTC : $btc \n ETH : $eth"

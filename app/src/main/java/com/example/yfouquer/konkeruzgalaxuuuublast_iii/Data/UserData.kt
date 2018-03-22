@@ -11,16 +11,15 @@ object UserData {
     lateinit var planets: MutableList<StaticType.PlanetData>
     lateinit var techs: MutableList<Pair<Int, Long>>
 
-    var disableButton: MutableMap<Pair<Int,SuperEnum>,Boolean> = hashMapOf()
+    var disableButton: MutableMap<Pair<Int, SuperEnum>, Boolean> = hashMapOf()
 
-    fun getLevel(planet: Int, data: StaticType.Data, position: Int): Long {
+    fun getLevel(planet: Int, data: SuperEnum, position: Int): Long {
 
         return when (data) {
-            is StaticType.BuildData -> planets[planet].batiments.firstOrNull { it.first == position }?.second
-            is StaticType.TechData -> techs.firstOrNull { it.first == position }?.second
-            is StaticType.ShipData -> planets[planet].ships.firstOrNull { it.first == position }?.second
-            is StaticType.DefData -> planets[planet].defenses.firstOrNull { it.first == position }?.second
-            else -> throw IllegalArgumentException("Unknown Type in UserData")
+            SuperEnum.BUILDING -> planets[planet].batiments.firstOrNull { it.first == position }?.second
+            SuperEnum.TECH -> techs.firstOrNull { it.first == position }?.second
+            SuperEnum.SHIP -> planets[planet].ships.firstOrNull { it.first == position }?.second
+            SuperEnum.DEFENSE -> planets[planet].defenses.firstOrNull { it.first == position }?.second
         } ?: 0
     }
 }

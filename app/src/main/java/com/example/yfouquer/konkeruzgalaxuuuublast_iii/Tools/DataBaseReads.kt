@@ -73,10 +73,11 @@ object DataBaseReads {
                         val referenceFromUrl = mStorageInst.getReference(image)
                         val btc = ds.child("cost/btc").value as Long
                         val eth = ds.child("cost/eth").value as Long
+                        val time = ds.child("cost/time").value as Long
 //                        val cL = makeCostLevel(ds.child("cost/level"))
 //
                         dowloadImage(applicationContext, image, referenceFromUrl)
-                        GameData.add(BuildData(name, desc, image, Cost(btc, eth)))
+                        GameData.add(BuildData(name, desc, image, Cost(btc, eth, time)))
                     }
                 })
             }
@@ -97,12 +98,13 @@ object DataBaseReads {
                     val imageRef = mStorageInst.getReference(image)
                     val btc = ds.child("cost/btc").value as Long
                     val eth = ds.child("cost/eth").value as Long
+                    val time = ds.child("cost/time").value as Long // TODO doesn't exist
                     val defStats = makeDefStat(ds.child("stats"))
                     val techs = ds.child("techs").children.map {
                         Pair(it.key.toInt(), it.value as Long)
                     }.toCollection(mutableListOf())
                     dowloadImage(applicationContext, image, imageRef)
-                    GameData.add(DefData(name, desc, image, defStats, Cost(btc, eth), techs))
+                    GameData.add(DefData(name, desc, image, defStats, Cost(btc, eth, time), techs))
                 }
             }
 
@@ -121,8 +123,9 @@ object DataBaseReads {
                     val imageRef = mStorageInst.getReference(image)
                     val btc = ds.child("cost/btc").value as Long
                     val eth = ds.child("cost/eth").value as Long
+                    val time = ds.child("cost/time").value as Long
                     dowloadImage(applicationContext, image, imageRef)
-                    GameData.add(TechData(name, desc, image, Cost(btc, eth)))
+                    GameData.add(TechData(name, desc, image, Cost(btc, eth, time)))
                 }
             }
 
@@ -141,12 +144,13 @@ object DataBaseReads {
                     val imageRef = mStorageInst.getReference(image)
                     val btc = ds.child("cost/btc").value as Long
                     val eth = ds.child("cost/eth").value as Long
+                    val time = ds.child("cost/time").value as Long
                     val stats = makeShipStat(ds.child("stats"))
                     val techs = ds.child("techs").children.map {
                         Pair(it.key.toInt(), it.value as Long)
                     }.toCollection(mutableListOf())
                     dowloadImage(applicationContext, image, imageRef)
-                    GameData.add(ShipData(name, desc, image, stats, Cost(btc, eth), techs))
+                    GameData.add(ShipData(name, desc, image, stats, Cost(btc, eth, time), techs))
                 }
             }
 

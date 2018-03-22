@@ -4,7 +4,7 @@ package com.example.yfouquer.konkeruzgalaxuuuublast_iii.Tools
  * Created by yfouquer on 06/03/18.
  */
 object StaticType {
-    data class Cost(val btc: Long, val eth: Long)
+    data class Cost(val btc: Long, val eth: Long, val time: Long)
     data class ShipStats(val damage: Long, val life: Long, val contenance: Long)
     data class DefStats(val damage: Double, val life: Double, val repair: Double)
 
