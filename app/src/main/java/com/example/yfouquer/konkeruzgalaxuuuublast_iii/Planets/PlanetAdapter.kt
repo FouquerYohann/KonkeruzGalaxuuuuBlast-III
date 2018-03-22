@@ -16,21 +16,21 @@ import com.example.yfouquer.konkeruzgalaxuuuublast_iii.Data.SuperEnum
 import com.example.yfouquer.konkeruzgalaxuuuublast_iii.Data.UserData
 import com.example.yfouquer.konkeruzgalaxuuuublast_iii.R
 import com.example.yfouquer.konkeruzgalaxuuuublast_iii.Tools.StaticType
-import com.example.yfouquer.konkeruzgalaxuuuublast_iii.databinding.PlanetViewBinding
 import com.example.yfouquer.konkeruzgalaxuuuublast_iii.Tools.calculEngine
+import com.example.yfouquer.konkeruzgalaxuuuublast_iii.databinding.PlanetViewBinding
 import kotlinx.android.synthetic.main.planet_view.view.*
 import java.util.*
 
 /**
  * Created by yfouquer on 13/03/18. modified by aescriou later
  */
-class PlanetAdapter(private var planet: MutableList<StaticType.PlanetData>, val applicationContext: Context) :
+class PlanetAdapter(private var planet: MutableList<StaticType.PlanetData>,
+                    val applicationContext: Context) :
         RecyclerView.Adapter<PlanetAdapter.PlanetViewHolder>() {
 
-    private var expandedPosition:Int = -1
+    private var expandedPosition: Int = -1
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PlanetViewHolder {
-//        val v = LayoutInflater.from(parent.context).inflate(R.layout.planet_view, parent, false)
         val inflate = DataBindingUtil.inflate<PlanetViewBinding>(
                 LayoutInflater.from(parent.context), R.layout.planet_view, parent, false)
 
@@ -43,9 +43,8 @@ class PlanetAdapter(private var planet: MutableList<StaticType.PlanetData>, val 
 
     override fun onBindViewHolder(holder: PlanetViewHolder, position: Int) {
         holder.bind(UserData.planets[position])
-//        holder.name.text = planet[position].name
-//        holder.btc.text = planet[position].ressource.btc.toString()
-//        holder.eth.text = planet[position].ressource.eth.toString()
+
+
         val imageId = when (position) {
             0 -> R.drawable.planet_0
             1 -> R.drawable.planet_1
@@ -65,9 +64,12 @@ class PlanetAdapter(private var planet: MutableList<StaticType.PlanetData>, val 
         if (buildingId != null) {
             val timeLeft = Date().time - UserData.planets[position].constructionBat!!.since
             val levelBat = UserData.getLevel(position, SuperEnum.BUILDING, buildingId)
-            val realTime = calculEngine.timeBaTech(levelBat.toInt(), UserData.getLevel(position, SuperEnum.BUILDING, 3).toInt(), GameData.buildings[buildingId].cost.time.toInt())
+            val realTime = calculEngine.timeBaTech(levelBat.toInt(),
+                    UserData.getLevel(position, SuperEnum.BUILDING, 3).toInt(),
+                    GameData.buildings[buildingId].cost.time.toInt())
             val time = realTime - timeLeft
-            val str = GameData.buildings[buildingId].name + " lvl " + (levelBat + 1) + ": " + this.formatDate(time)
+            val str = GameData.buildings[buildingId].name + " lvl " + (levelBat + 1) + ": " + this.formatDate(
+                    time)
             holder.battencourt.text = str
         }
         holder.goToPlanet.setOnClickListener {
@@ -78,35 +80,26 @@ class PlanetAdapter(private var planet: MutableList<StaticType.PlanetData>, val 
 
         }
 
+
     }
 
-
-    class PlanetViewHolder(private val v: ViewDataBinding) : RecyclerView.ViewHolder(v.root) {
-        val image = v.root.planetView!!
-        val toHide = v.root.toHide!!
-        val goToPlanet = v.root.goToPlanet!!
-
-        fun bind(data: StaticType.PlanetData) {
-            v.setVariable(BR.planet, data)
-            v.executePendingBindings()
-        }
-
-
     private fun formatDate(time: Long): String {
-        if(time<0)return " -- s"
+        if (time < 0) return " -- s"
         val h = time / 360000
         val min = (time % 360000) / 6000
         val sec = (time % 6000) / 100
         return "" + h + " h " + min + " min " + sec + " s "
     }
 
-    class PlanetViewHolder(v: View) : RecyclerView.ViewHolder(v) {
-        val name = v.title_planet!!
-        val image = v.planetView!!
-        val eth = v.eth!!
-        val btc = v.btc!!
-        val toHide = v.toHide!!
-        val goToPlanet = v.goToPlanet!!
-        val battencourt = v.Battencourt!!
+    class PlanetViewHolder(private val v: ViewDataBinding) : RecyclerView.ViewHolder(v.root) {
+        val image = v.root.planetView!!
+        val toHide = v.root.toHide!!
+        val goToPlanet = v.root.goToPlanet!!
+        val battencourt = v.root.Battencourt!!
+
+        fun bind(data: StaticType.PlanetData) {
+            v.setVariable(BR._all, data)
+            v.executePendingBindings()
+        }
     }
 }

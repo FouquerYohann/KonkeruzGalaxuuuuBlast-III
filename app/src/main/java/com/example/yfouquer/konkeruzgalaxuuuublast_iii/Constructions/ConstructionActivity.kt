@@ -25,7 +25,7 @@ class ConstructionActivity() : AppCompatActivity() {
                 R.layout.construction_activity)
 
         val planet = intent.getIntExtra("planet",0)
-        binding.setVariable(BR.planet,UserData.planets[planet])
+        binding.setVariable(BR._all,UserData.planets[planet])
 
         viewPager = findViewById(R.id.viewPager)
         pagerAdapter = ConstructionsPageAdapter(planet,supportFragmentManager, "BuildData")

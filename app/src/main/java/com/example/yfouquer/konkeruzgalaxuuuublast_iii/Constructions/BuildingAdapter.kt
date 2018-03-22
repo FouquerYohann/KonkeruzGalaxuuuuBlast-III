@@ -1,11 +1,13 @@
 package com.example.yfouquer.konkeruzgalaxuuuublast_iii.Constructions
 
 import android.content.Context
+import android.databinding.DataBindingUtil
+import android.databinding.ViewDataBinding
 import android.graphics.BitmapFactory
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
+import com.example.yfouquer.konkeruzgalaxuuuublast_iii.BR
 import com.example.yfouquer.konkeruzgalaxuuuublast_iii.Data.SuperEnum
 import com.example.yfouquer.konkeruzgalaxuuuublast_iii.Data.SuperEnum.*
 import com.example.yfouquer.konkeruzgalaxuuuublast_iii.Data.UserData
@@ -16,6 +18,7 @@ import com.example.yfouquer.konkeruzgalaxuuuublast_iii.Tools.StaticType.BuildDat
 import com.example.yfouquer.konkeruzgalaxuuuublast_iii.Tools.StaticType.DefData
 import com.example.yfouquer.konkeruzgalaxuuuublast_iii.Tools.StaticType.ShipData
 import com.example.yfouquer.konkeruzgalaxuuuublast_iii.Tools.StaticType.TechData
+import com.example.yfouquer.konkeruzgalaxuuuublast_iii.databinding.ConstructionActivityBinding
 import kotlinx.android.synthetic.main.view_row.view.*
 import java.io.File
 import java.io.FileInputStream
@@ -25,16 +28,19 @@ class BuildingAdapter(private var planet: Int, private var mDataset: List<Static
         RecyclerView.Adapter<BuildingAdapter.ConstructionViewHolder>() {
 
     override fun onBindViewHolder(holder: ConstructionViewHolder, position: Int) {
+
+        holder.bind(mDataset[position])
+
+        val btc = mDataset[position].cost.btc
+        val eth = mDataset[position].cost.eth
+
         val dir = applicationContext.getDir("imagesDir", Context.MODE_PRIVATE)
         val file = File(dir, mDataset[position].image)
         val decodeStream = BitmapFactory.decodeStream(FileInputStream(file))
-        val btc = mDataset[position].cost.btc
-        val eth = mDataset[position].cost.eth
         holder.image.setImageBitmap(decodeStream)
 
         val level = UserData.getLevel(planet, SuperEnum.getEnum(mDataset[position]), position)
 
-        holder.text.text = "${mDataset[position].name} \n Level: $level"
         holder.button.text = "BTC : $btc \n ETH : $eth"
         val b = UserData.disableButton[Pair(planet, Companion.getEnum(mDataset[0]))] ?: false
         if (b) holder.button.isEnabled = false
@@ -59,13 +65,18 @@ class BuildingAdapter(private var planet: Int, private var mDataset: List<Static
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ConstructionViewHolder {
-        val v = LayoutInflater.from(parent.context).inflate(view_row, parent, false)
-        return ConstructionViewHolder(v)
+        val inflate = DataBindingUtil.inflate<ConstructionActivityBinding>(LayoutInflater.from(parent.context),
+                view_row, parent, false)
+        return ConstructionViewHolder(inflate)
     }
 
-    class ConstructionViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        val text = view.textView!!
-        val image = view.imageView!!
-        val button = view.button!!
+    class ConstructionViewHolder(private val v: ViewDataBinding) : RecyclerView.ViewHolder(v.root) {
+        val button = v.root.button!!
+        val image = v.root.imageView!!
+
+        fun bind(data: StaticType.Data) {
+            v.setVariable(BR._all, data)
+            v.executePendingBindings()
+        }
     }
 }
