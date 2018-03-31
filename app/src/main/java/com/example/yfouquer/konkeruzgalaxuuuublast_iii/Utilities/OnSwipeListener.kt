@@ -27,7 +27,7 @@ class OnSwipeListener(val applicationContext: Context) : GestureDetector.SimpleO
             else -> "RIGHT"
         }
 
-        if (direction === "LEFT"){
+        if (direction === "RIGHT"){
             applicationContext.startActivities(Array(1,{ Intent(applicationContext,SystemActivity::class.java) }))
         }
 

@@ -23,6 +23,7 @@ class PlanetActivity : AppCompatActivity(){
         super.onCreate(savedInstanceState)
         setContentView(R.layout.planet_activity)
 
+        DataBaseReads.autoRefreshUser(UserData.uid)
 
         gestureDetector = GestureDetectorCompat(this, OnSwipeListener(this))
 //        DataBaseReads.disableButton()

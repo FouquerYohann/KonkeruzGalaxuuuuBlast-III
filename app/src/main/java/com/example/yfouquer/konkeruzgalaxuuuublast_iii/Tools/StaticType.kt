@@ -56,4 +56,7 @@ object StaticType {
 
     data class ConstructionDef(val listBuild: List<MutableMap<Int, Long>>, override val since: Long) : AbstractConstruction()
     data class ConstructionShip(val listBuild: List<MutableMap<Int, Long>>, override val since: Long) : AbstractConstruction()
+
+
+
 }

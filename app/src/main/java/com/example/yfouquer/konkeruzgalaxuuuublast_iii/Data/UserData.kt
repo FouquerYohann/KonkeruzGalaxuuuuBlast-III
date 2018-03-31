@@ -14,7 +14,6 @@ object UserData {
     var disableButton: MutableMap<Pair<Int, SuperEnum>, Boolean> = hashMapOf()
 
     fun getLevel(planet: Int, data: SuperEnum, position: Int): Long {
-
         return when (data) {
             SuperEnum.BUILDING -> planets[planet].batiments.firstOrNull { it.first == position }?.second
             SuperEnum.TECH -> techs.firstOrNull { it.first == position }?.second

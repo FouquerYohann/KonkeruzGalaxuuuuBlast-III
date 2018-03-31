@@ -60,6 +60,8 @@ class PlanetAdapter(private var planet: MutableList<StaticType.PlanetData>,
             expandedPosition = if (isExpanded) -1 else position
             notifyItemChanged(position)
         })
+
+
         val buildingId = UserData.planets[position].constructionBat?.id?.toInt()
         if (buildingId != null) {
             val timeLeft = Date().time - UserData.planets[position].constructionBat!!.since
@@ -72,6 +74,8 @@ class PlanetAdapter(private var planet: MutableList<StaticType.PlanetData>,
                     time)
             holder.battencourt.text = str
         }
+
+
         holder.goToPlanet.setOnClickListener {
             val intent = Intent(applicationContext, ConstructionActivity::class.java).putExtra(
                     "planet", position)

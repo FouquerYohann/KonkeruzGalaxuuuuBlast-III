@@ -18,7 +18,6 @@ import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
 import java.io.File
 import java.io.FileOutputStream
-import java.util.AbstractMap
 
 object DataBaseReads {
 
@@ -74,8 +73,7 @@ object DataBaseReads {
                         val btc = ds.child("cost/btc").value as Long
                         val eth = ds.child("cost/eth").value as Long
                         val time = ds.child("cost/time").value as Long
-//                        val cL = makeCostLevel(ds.child("cost/level"))
-//
+
                         dowloadImage(applicationContext, image, referenceFromUrl)
                         GameData.add(BuildData(name, desc, image, Cost(btc, eth, time)))
                     }
@@ -85,7 +83,6 @@ object DataBaseReads {
             override fun onCancelled(dError: DatabaseError?) {
                 println("loadPost:onCancelled ${dError?.toException()}")
             }
-
         })
     }
 
@@ -163,6 +160,8 @@ object DataBaseReads {
 
 
     fun userData(userId: String) {
+        println("USER DATA UPDATED !!!!")
+
         mDataBaseReference.child("users/$userId").addListenerForSingleValueEvent(object :
                 ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
@@ -186,7 +185,6 @@ object DataBaseReads {
         mDataBaseReference.child("users/$userId").addValueEventListener(object : ValueEventListener {
             override fun onCancelled(dError: DatabaseError?) {
                 println("loadPost:onCancelled ${dError?.toException()}")
-
             }
 
             override fun onDataChange(p0: DataSnapshot?) {
@@ -230,19 +228,12 @@ object DataBaseReads {
                         }.toMap(HashMap<Int, Long>())
                     }.toList(), it.child("since").value as Long)
                     else -> null
-
                 }
 
                 when (abstractConstruction) {
-                    is StaticType.ConstructionShip -> {
-                        constructionShips = abstractConstruction
-                    }
-                    is StaticType.ConstructionBat -> {
-                        constructionBat = abstractConstruction
-                    }
-                    is StaticType.ConstructionDef -> {
-                        constructionDef = abstractConstruction
-                    }
+                    is StaticType.ConstructionShip -> constructionShips = abstractConstruction
+                    is StaticType.ConstructionBat -> constructionBat = abstractConstruction
+                    is StaticType.ConstructionDef -> constructionDef = abstractConstruction
                 }
             }
             StaticType.PlanetData(name, size, resource, batiments, planetCoord, defenses, ships, constructionBat, constructionShips, constructionDef)
@@ -253,6 +244,30 @@ object DataBaseReads {
         return StaticType.UserInfo(ds.child("lastConnection").value as Long,
                 ds.child("pseudo").value as String)
     }
+
+    fun GalaxyInfo(): Unit {
+        mDataBaseReference.child("galaxy").addListenerForSingleValueEvent(object: ValueEventListener {
+            override fun onCancelled(dError: DatabaseError?) {
+                println("loadPost:onCancelled ${dError?.toException()}")
+            }
+
+            override fun onDataChange(ds: DataSnapshot) {
+                GameData.galaxyMap = ds.children.flatMap {
+                    val galaxy = it.key.toInt()
+                    it.child(it.key).children.map {
+                        val pos = it.key.toInt()
+                        val namePlanet = it.child("name").value as String
+                        val player = it.child("pseurdo").value as String
+                        Pair(Pair(galaxy, pos), player)
+                    }
+                }.toMap(HashMap())
+
+
+            }
+        })
+    }
+
+
 
 
     fun disableButton() {

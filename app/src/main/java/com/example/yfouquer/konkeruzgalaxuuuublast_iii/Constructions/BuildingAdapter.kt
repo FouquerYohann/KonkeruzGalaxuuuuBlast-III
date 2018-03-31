@@ -8,7 +8,6 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import com.example.yfouquer.konkeruzgalaxuuuublast_iii.BR
-import com.example.yfouquer.konkeruzgalaxuuuublast_iii.Data.SuperEnum
 import com.example.yfouquer.konkeruzgalaxuuuublast_iii.Data.SuperEnum.*
 import com.example.yfouquer.konkeruzgalaxuuuublast_iii.Data.UserData
 import com.example.yfouquer.konkeruzgalaxuuuublast_iii.R.layout.view_row
@@ -28,19 +27,30 @@ class BuildingAdapter(private var planet: Int, private var mDataset: List<Static
 
     override fun onBindViewHolder(holder: ConstructionViewHolder, position: Int) {
 
-        holder.bind(mDataset[position])
+        holder.bind(BR.item, mDataset[position])
 
-        val btc = mDataset[position].cost.btc
-        val eth = mDataset[position].cost.eth
+
+        holder.bind(BR.level, when (mDataset[0]) {
+            is BuildData -> "Level " +UserData.planets[planet].batiments.firstOrNull { it.first == position }?.second
+            is TechData ->  "Level " +UserData.techs.firstOrNull { it.first == position }?.second
+            is ShipData -> "Number " +UserData.planets[planet].ships.firstOrNull { it.first == position }?.second
+            is DefData -> "Number " +UserData.planets[planet].defenses.firstOrNull { it.first == position }?.second
+            else -> throw IllegalArgumentException("Data Type Not Found")
+        })
+
+
+        holder.bind(BR.btc_prix,mDataset[position].cost.btc)
+        holder.bind(BR.eth_prix,mDataset[position].cost.eth)
 
         val dir = applicationContext.getDir("imagesDir", Context.MODE_PRIVATE)
         val file = File(dir, mDataset[position].image)
         val decodeStream = BitmapFactory.decodeStream(FileInputStream(file))
         holder.image.setImageBitmap(decodeStream)
 
-        val level = UserData.getLevel(planet, SuperEnum.getEnum(mDataset[position]), position)
 
-        holder.button.text = "BTC : $btc \n ETH : $eth"
+
+
+
         val b = UserData.disableButton[Pair(planet, Companion.getEnum(mDataset[0]))] ?: false
         if (b) holder.button.isEnabled = false
 
@@ -52,8 +62,6 @@ class BuildingAdapter(private var planet: Int, private var mDataset: List<Static
                 is DefData -> DataBaseWrites.writesToBuilding(planet, DEFENSE, position, 10)
                 else -> throw IllegalArgumentException("Unknow data type")
             }
-
-
         }
 
 
@@ -73,8 +81,8 @@ class BuildingAdapter(private var planet: Int, private var mDataset: List<Static
         val button = v.root.button!!
         val image = v.root.imageView!!
 
-        fun bind(data: StaticType.Data) {
-            v.setVariable(BR.item, data)
+        fun bind(id:Int, data: Any) {
+            v.setVariable(id, data)
             v.executePendingBindings()
         }
     }

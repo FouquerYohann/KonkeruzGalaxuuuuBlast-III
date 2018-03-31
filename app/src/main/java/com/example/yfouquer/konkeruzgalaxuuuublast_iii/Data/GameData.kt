@@ -1,6 +1,5 @@
 package com.example.yfouquer.konkeruzgalaxuuuublast_iii.Data
 
-import com.example.yfouquer.konkeruzgalaxuuuublast_iii.Tools.StaticType
 import com.example.yfouquer.konkeruzgalaxuuuublast_iii.Tools.StaticType.BuildData
 import com.example.yfouquer.konkeruzgalaxuuuublast_iii.Tools.StaticType.Data
 import com.example.yfouquer.konkeruzgalaxuuuublast_iii.Tools.StaticType.DefData
@@ -16,6 +15,8 @@ object GameData {
     var defenses = mutableListOf<DefData>()
     var techs = mutableListOf<TechData>()
     var ships = mutableListOf<ShipData>()
+
+    var galaxyMap = mutableMapOf<Pair<Int, Int>,String>()
 
     var datas = hashMapOf("BuildData" to buildings, "DefData" to defenses,
             "TechData" to techs, "ShipData" to ships)

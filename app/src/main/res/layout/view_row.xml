@@ -2,9 +2,21 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android">
 
     <data>
+
         <variable
             name="item"
-            type="com.example.yfouquer.konkeruzgalaxuuuublast_iii.Tools.StaticType.Data"/>
+            type="com.example.yfouquer.konkeruzgalaxuuuublast_iii.Tools.StaticType.Data" />
+
+        <variable
+            name="level"
+            type="String" />
+        
+        <variable
+            name="btc_prix"
+            type="Long" />
+        <variable
+            name="eth_prix"
+            type="Long" />
     </data>
 
     <LinearLayout
@@ -23,15 +35,30 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <TextView
-
+            <LinearLayout
                 android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_margin="5dp"
+                android:layout_height="wrap_content"
                 android:layout_weight="4"
-                android:gravity="center_vertical"
-                android:text="@{item.description}"
-                android:textAlignment="center" />
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:gravity="center_vertical"
+                    android:text="@{item.description}"
+                    android:textAlignment="center" />
+
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:gravity="center_vertical"
+                    android:text="@{level}"
+                    android:textAlignment="center" />
+
+            </LinearLayout>
 
             <Button
                 android:id="@+id/button"
@@ -40,7 +67,7 @@
                 android:layout_margin="5dp"
                 android:layout_weight="2"
                 android:autoText="false"
-                android:text="not here yet"
+                android:text='@{"Btc : "+Long.toString(btc_prix)+"\n Eth : "+Long.toString(eth_prix)}'
                 android:textSize="10sp" />
 
         </LinearLayout>

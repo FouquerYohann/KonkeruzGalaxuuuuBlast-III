@@ -8,6 +8,7 @@ import android.support.v7.app.AppCompatActivity
 import com.example.yfouquer.konkeruzgalaxuuuublast_iii.BR
 import com.example.yfouquer.konkeruzgalaxuuuublast_iii.Data.UserData
 import com.example.yfouquer.konkeruzgalaxuuuublast_iii.R
+import com.example.yfouquer.konkeruzgalaxuuuublast_iii.Tools.DataBaseReads
 import kotlinx.android.synthetic.main.construction_activity.*
 
 
@@ -33,6 +34,11 @@ class ConstructionActivity() : AppCompatActivity() {
 
         recyclerTabLayout.setUpWithViewPager(viewPager)
         viewPager.currentItem = 0
+
+        refresher.setOnClickListener{
+                DataBaseReads.userData(UserData.uid)
+
+        }
     }
 
 

@@ -1,14 +1,15 @@
 package com.example.yfouquer.konkeruzgalaxuuuublast_iii
 
 import android.app.ProgressDialog
+import android.content.Context
 import android.content.Intent
+import android.os.AsyncTask
 import android.os.Bundle
 import android.os.Handler
 import android.support.v7.app.AppCompatActivity
 import android.text.TextUtils
 import android.widget.Toast
 import com.example.yfouquer.konkeruzgalaxuuuublast_iii.Data.UserData
-import com.example.yfouquer.konkeruzgalaxuuuublast_iii.Galaxy.SystemActivity
 import com.example.yfouquer.konkeruzgalaxuuuublast_iii.Planets.PlanetActivity
 import com.example.yfouquer.konkeruzgalaxuuuublast_iii.R.layout.login_activity
 import com.example.yfouquer.konkeruzgalaxuuuublast_iii.Tools.DataBaseReads
@@ -51,20 +52,17 @@ class LoginActivity : AppCompatActivity() {
 
         if (login) {
             mAuth.signInWithEmailAndPassword(mEmail, mPassword).addOnCompleteListener { task ->
-                mProgressBar!!.hide()
                 if (task.isSuccessful) {
                     Toast.makeText(this, "Sign in Successfully", Toast.LENGTH_LONG).show()
-                   UserData.uid = FirebaseAuth.getInstance().currentUser!!.uid
-                    DataBaseReads.buildingData(applicationContext)
-                    DataBaseReads.defenseData(applicationContext)
-                    DataBaseReads.shipData(applicationContext)
-                    DataBaseReads.techData(applicationContext)
-                    DataBaseReads.userData(UserData.uid)
+                    UserData.uid = FirebaseAuth.getInstance().currentUser!!.uid
+                    DownloadData(applicationContext).execute().get()
                     Handler().postDelayed({
-                        val intent = Intent(this, PlanetActivity::class.java)
-                        startActivity(intent)
-                        //startActivity(Intent(this,ConstructionActivity::class.java))
-                    }, 2000 )
+                        startActivity(Intent(this,PlanetActivity::class.java))
+                    },500)
+
+                    mProgressBar!!.hide()
+
+
                 } else {
                     Toast.makeText(this, "Sign in Failed", Toast.LENGTH_SHORT).show()
                 }
@@ -92,5 +90,17 @@ class LoginActivity : AppCompatActivity() {
 
     private fun isValidMail(mEmail: String?): Boolean {
         return true
+    }
+
+    class DownloadData(private val applicationContext: Context) : AsyncTask<Void, Void, String>(){
+
+        override fun doInBackground(vararg p0: Void?): String {
+            DataBaseReads.buildingData(applicationContext)
+            DataBaseReads.defenseData(applicationContext)
+            DataBaseReads.shipData(applicationContext)
+            DataBaseReads.techData(applicationContext)
+            DataBaseReads.userData(UserData.uid)
+            return "ok"
+        }
     }
 }
