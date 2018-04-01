@@ -1,50 +1,68 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="horizontal" android:layout_width="match_parent"
-    android:layout_height="wrap_content" android:gravity="center_horizontal" >
-
-    <TextView
-        android:layout_width="0dp"
-        android:layout_weight="1"
-        android:layout_height="30dp"
-        android:gravity="center"
-        android:id="@+id/systemId"
-        android:text="1"/>
-
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal">
+    <data>
+        <variable
+            name="player"
+            type="String"/>
+        <variable
+            name="planetName"
+            type="String"/>
+    </data>
     <LinearLayout
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center"
-        android:orientation="vertical"
-        android:layout_weight="3"
-        android:layout_marginTop="7dp">
+        android:gravity="center_horizontal">
+
         <TextView
+            android:id="@+id/systemId"
+            android:layout_width="0dp"
+            android:layout_height="30dp"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="1" />
+
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/ownerName"
-            android:text="AwesomePlayer"/>
-        <TextView
-            android:layout_width="wrap_content"
+            android:layout_marginTop="7dp"
+            android:layout_weight="5"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/ownerName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@{player}" />
+
+            <TextView
+                android:id="@+id/planetName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@{planetName}" />
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/systemButton1"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:id="@+id/planetName"
-            android:text="MegaPlanet"/>
+            android:layout_weight="1"
+            android:text="1" />
+
+        <Button
+            android:id="@+id/systemButton2"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="2" />
+
+        <Button
+            android:id="@+id/systemButton3"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="3" />
     </LinearLayout>
-    <Button
-        android:layout_width="0dp"
-        android:layout_weight="1"
-        android:layout_height="wrap_content"
-        android:id="@+id/systemButton1"
-        android:text="1"/>
-    <Button
-        android:layout_width="0dp"
-        android:layout_weight="1"
-        android:layout_height="wrap_content"
-        android:id="@+id/systemButton2"
-        android:text="2"/>
-    <Button
-        android:layout_width="0dp"
-        android:layout_weight="1"
-        android:layout_height="wrap_content"
-        android:id="@+id/systemButton3"
-        android:text="3"/>
-</LinearLayout>
+
+</layout>

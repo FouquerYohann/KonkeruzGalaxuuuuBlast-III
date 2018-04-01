@@ -189,6 +189,7 @@ object DataBaseReads {
 
             override fun onDataChange(p0: DataSnapshot?) {
                 userData(userId)
+                GalaxyInfo()
             }
         })
     }
@@ -246,7 +247,7 @@ object DataBaseReads {
     }
 
     fun GalaxyInfo(): Unit {
-        mDataBaseReference.child("galaxy").addListenerForSingleValueEvent(object: ValueEventListener {
+        mDataBaseReference.child("galaxy").addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onCancelled(dError: DatabaseError?) {
                 println("loadPost:onCancelled ${dError?.toException()}")
             }
@@ -254,20 +255,18 @@ object DataBaseReads {
             override fun onDataChange(ds: DataSnapshot) {
                 GameData.galaxyMap = ds.children.flatMap {
                     val galaxy = it.key.toInt()
-                    it.child(it.key).children.map {
+                    it.children.map {
                         val pos = it.key.toInt()
+                        println(it.ref)
+                        val player = it.child("pseudo").value as String
                         val namePlanet = it.child("name").value as String
-                        val player = it.child("pseurdo").value as String
-                        Pair(Pair(galaxy, pos), player)
+                        Pair(Pair(galaxy, pos), Pair(player, namePlanet))
                     }
+
                 }.toMap(HashMap())
-
-
             }
         })
     }
-
-
 
 
     fun disableButton() {

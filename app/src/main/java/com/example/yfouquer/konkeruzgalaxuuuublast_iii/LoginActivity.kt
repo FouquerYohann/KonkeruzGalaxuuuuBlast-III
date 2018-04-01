@@ -58,7 +58,7 @@ class LoginActivity : AppCompatActivity() {
                     DownloadData(applicationContext).execute().get()
                     Handler().postDelayed({
                         startActivity(Intent(this,PlanetActivity::class.java))
-                    },500)
+                    },5000)
 
                     mProgressBar!!.hide()
 
