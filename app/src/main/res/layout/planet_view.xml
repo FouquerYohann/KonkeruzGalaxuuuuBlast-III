@@ -6,6 +6,9 @@
         <variable
             name="planet"
             type="com.example.yfouquer.konkeruzgalaxuuuublast_iii.Tools.StaticType.PlanetData" />
+        <variable
+            name="batimentEnCours"
+            type="String" />
     </data>
 
     <LinearLayout
@@ -137,7 +140,7 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="Liliane"
+                        android:text="@{batimentEnCours}"
                         android:textAlignment="center" />
                 </TableRow>
 

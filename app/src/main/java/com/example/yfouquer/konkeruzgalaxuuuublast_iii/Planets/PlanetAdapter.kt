@@ -42,7 +42,7 @@ class PlanetAdapter(private var planet: MutableList<StaticType.PlanetData>,
     }
 
     override fun onBindViewHolder(holder: PlanetViewHolder, position: Int) {
-        holder.bind(UserData.planets[position])
+        holder.bind(BR.planet, UserData.planets[position])
 
 
         val imageId = when (position) {
@@ -70,8 +70,8 @@ class PlanetAdapter(private var planet: MutableList<StaticType.PlanetData>,
                     UserData.getLevel(position, SuperEnum.BUILDING, 3).toInt(),
                     GameData.buildings[buildingId].cost.time.toInt())
             val time = realTime - timeLeft
-            val str = GameData.buildings[buildingId].name + " lvl " + (levelBat + 1) + ": " + this.formatDate(
-                    time)
+            val str = GameData.buildings[buildingId].name + " lvl " + (levelBat + 1) + ":\n" + this.formatDate(time)
+            holder.bind(BR.batimentEnCours, str)
             holder.battencourt.text = str
         }
 
@@ -101,8 +101,8 @@ class PlanetAdapter(private var planet: MutableList<StaticType.PlanetData>,
         val goToPlanet = v.root.goToPlanet!!
         val battencourt = v.root.Battencourt!!
 
-        fun bind(data: StaticType.PlanetData) {
-            v.setVariable(BR.planet, data)
+        fun bind(id: Int, data: Any) {
+            v.setVariable(id, data)
             v.executePendingBindings()
         }
     }
