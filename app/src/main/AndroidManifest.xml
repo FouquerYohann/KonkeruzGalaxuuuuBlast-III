@@ -9,7 +9,7 @@
 
     <application
         android:allowBackup="true"
-        android:icon="@drawable/antoine_mini"
+        android:icon="@mipmap/antoine_mini"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"

@@ -8,11 +8,12 @@ import com.example.yfouquer.konkeruzgalaxuuuublast_iii.Data.GameData.datas
 /**
  * Created by yfouquer on 08/03/18.
  */
-class ConstructionsPageAdapter(val planet:Int,fragmentManager: FragmentManager, private val gameData: String) :
+class ConstructionsPageAdapter(val planet: Int, fragmentManager: FragmentManager,
+                               private val gameData: String) :
         FragmentStatePagerAdapter(fragmentManager) {
 
     override fun getItem(position: Int): Fragment {
-        return ConstructionsFragment.newInstance(planet,gameData).get(planet,position)
+        return ConstructionsFragment.newInstance(planet, gameData).get(planet, position)
     }
 
     override fun getPageTitle(position: Int): CharSequence {

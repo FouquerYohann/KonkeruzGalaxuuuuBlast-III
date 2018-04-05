@@ -49,7 +49,7 @@ class PlanetAdapter(private var planet: MutableList<StaticType.PlanetData>,
             0 -> R.drawable.planet_0
             1 -> R.drawable.planet_1
             2 -> R.drawable.planet_2
-            else -> R.drawable.antoine_mini
+            else -> R.mipmap.antoine_mini
         }
         holder.image.setImageDrawable(applicationContext.resources.getDrawable(imageId, null))
 
@@ -70,7 +70,8 @@ class PlanetAdapter(private var planet: MutableList<StaticType.PlanetData>,
                     UserData.getLevel(position, SuperEnum.BUILDING, 3).toInt(),
                     GameData.buildings[buildingId].cost.time.toInt())
             val time = realTime - timeLeft
-            val str = GameData.buildings[buildingId].name + " lvl " + (levelBat + 1) + ":\n" + this.formatDate(time)
+            val str = GameData.buildings[buildingId].name + " lvl " + (levelBat + 1) + ":\n" + this.formatDate(
+                    time)
             holder.bind(BR.batimentEnCours, str)
             holder.battencourt.text = str
         }

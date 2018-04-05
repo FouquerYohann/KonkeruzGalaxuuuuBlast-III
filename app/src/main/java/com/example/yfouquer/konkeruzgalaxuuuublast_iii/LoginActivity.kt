@@ -57,8 +57,8 @@ class LoginActivity : AppCompatActivity() {
                     UserData.uid = FirebaseAuth.getInstance().currentUser!!.uid
                     DownloadData(applicationContext).execute().get()
                     Handler().postDelayed({
-                        startActivity(Intent(this,PlanetActivity::class.java))
-                    },5000)
+                        startActivity(Intent(this, PlanetActivity::class.java))
+                    }, 2000)
 
                     mProgressBar!!.hide()
 
@@ -71,7 +71,7 @@ class LoginActivity : AppCompatActivity() {
             mAuth.createUserWithEmailAndPassword(mEmail, mPassword).addOnCompleteListener { task ->
                 mProgressBar!!.hide()
                 if (task.isSuccessful) {
-                        println("mAuth = ${mAuth}")
+                    println("mAuth = ${mAuth}")
 
                     DataBaseReads.mAuth = mAuth
                     Toast.makeText(this, "Register Successfully", Toast.LENGTH_LONG).show()
@@ -92,7 +92,7 @@ class LoginActivity : AppCompatActivity() {
         return true
     }
 
-    class DownloadData(private val applicationContext: Context) : AsyncTask<Void, Void, String>(){
+    class DownloadData(private val applicationContext: Context) : AsyncTask<Void, Void, String>() {
 
         override fun doInBackground(vararg p0: Void?): String {
             DataBaseReads.buildingData(applicationContext)
@@ -100,6 +100,7 @@ class LoginActivity : AppCompatActivity() {
             DataBaseReads.shipData(applicationContext)
             DataBaseReads.techData(applicationContext)
             DataBaseReads.userData(UserData.uid)
+            DataBaseReads.GalaxyInfo()
             return "ok"
         }
     }

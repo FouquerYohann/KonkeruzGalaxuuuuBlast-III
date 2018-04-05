@@ -31,24 +31,25 @@ class BuildingAdapter(private var planet: Int, private var mDataset: List<Static
 
 
         holder.bind(BR.level, when (mDataset[0]) {
-            is BuildData -> "Level " +UserData.planets[planet].batiments.firstOrNull { it.first == position }?.second
-            is TechData ->  "Level " +UserData.techs.firstOrNull { it.first == position }?.second
-            is ShipData -> "Number " +UserData.planets[planet].ships.firstOrNull { it.first == position }?.second
-            is DefData -> "Number " +UserData.planets[planet].defenses.firstOrNull { it.first == position }?.second
+            is BuildData ->
+                "Level " + (UserData.planets[planet].batiments.firstOrNull { it.first == position }?.second ?: "0")
+            is TechData ->
+                "Level " + (UserData.techs.firstOrNull { it.first == position }?.second ?: "0")
+            is ShipData ->
+                "Number " + (UserData.planets[planet].ships.firstOrNull { it.first == position }?.second ?: "0")
+            is DefData ->
+                "Number " + (UserData.planets[planet].defenses.firstOrNull { it.first == position }?.second ?: "0")
             else -> throw IllegalArgumentException("Data Type Not Found")
         })
 
 
-        holder.bind(BR.btc_prix,mDataset[position].cost.btc)
-        holder.bind(BR.eth_prix,mDataset[position].cost.eth)
+        holder.bind(BR.btc_prix, mDataset[position].cost.btc)
+        holder.bind(BR.eth_prix, mDataset[position].cost.eth)
 
         val dir = applicationContext.getDir("imagesDir", Context.MODE_PRIVATE)
         val file = File(dir, mDataset[position].image)
         val decodeStream = BitmapFactory.decodeStream(FileInputStream(file))
         holder.image.setImageBitmap(decodeStream)
-
-
-
 
 
         val b = UserData.disableButton[Pair(planet, Companion.getEnum(mDataset[0]))] ?: false
@@ -80,8 +81,7 @@ class BuildingAdapter(private var planet: Int, private var mDataset: List<Static
     class ConstructionViewHolder(private val v: ViewDataBinding) : RecyclerView.ViewHolder(v.root) {
         val button = v.root.button!!
         val image = v.root.imageView!!
-
-        fun bind(id:Int, data: Any) {
+        fun bind(id: Int, data: Any) {
             v.setVariable(id, data)
             v.executePendingBindings()
         }

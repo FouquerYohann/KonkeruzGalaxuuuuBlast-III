@@ -3,6 +3,7 @@ package com.example.yfouquer.konkeruzgalaxuuuublast_iii.Planets
 import android.os.Bundle
 import android.support.v4.view.GestureDetectorCompat
 import android.support.v7.app.AppCompatActivity
+import android.support.v7.widget.DividerItemDecoration
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.MotionEvent
@@ -15,9 +16,9 @@ import kotlinx.android.synthetic.main.planet_activity.*
 /**
  * Created by yfouquer on 12/03/18.
  */
-class PlanetActivity : AppCompatActivity(){
+class PlanetActivity : AppCompatActivity() {
 
-    lateinit var gestureDetector:GestureDetectorCompat
+    lateinit var gestureDetector: GestureDetectorCompat
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -30,8 +31,12 @@ class PlanetActivity : AppCompatActivity(){
 
         val recycle = findViewById<RecyclerView>(R.id.planetListView)
 
-        recycle.layoutManager=LinearLayoutManager(this)
-        recycle.adapter= PlanetAdapter(UserData.planets,applicationContext)
+        recycle.layoutManager = LinearLayoutManager(this)
+        recycle.adapter = PlanetAdapter(UserData.planets, applicationContext)
+
+        val mDividerItemDecoration = DividerItemDecoration(recycle.context,
+                RecyclerView.VERTICAL)
+        recycle.addItemDecoration(mDividerItemDecoration)
 
         refresh.setOnClickListener {
             DataBaseReads.userData(UserData.uid)

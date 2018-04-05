@@ -182,7 +182,8 @@ object DataBaseReads {
     }
 
     fun autoRefreshUser(userId: String) {
-        mDataBaseReference.child("users/$userId").addValueEventListener(object : ValueEventListener {
+        mDataBaseReference.child("users/$userId").addValueEventListener(object :
+                ValueEventListener {
             override fun onCancelled(dError: DatabaseError?) {
                 println("loadPost:onCancelled ${dError?.toException()}")
             }
@@ -216,8 +217,8 @@ object DataBaseReads {
             var constructionDef: StaticType.ConstructionDef? = null
             it.child("construction").children.map {
                 val abstractConstruction = when (it.key) {
-                    "batiments" ->
-                        StaticType.ConstructionBat(it.child("id").value as Long, it.child("since").value as Long)
+                    "batiments" -> StaticType.ConstructionBat(it.child("id").value as Long,
+                            it.child("since").value as Long)
                     "defenses" -> StaticType.ConstructionDef(it.child("list").children.map {
                         it.children.map {
                             Pair<Int, Long>(it.key.toInt(), it.value as Long)
@@ -237,7 +238,8 @@ object DataBaseReads {
                     is StaticType.ConstructionDef -> constructionDef = abstractConstruction
                 }
             }
-            StaticType.PlanetData(name, size, resource, batiments, planetCoord, defenses, ships, constructionBat, constructionShips, constructionDef)
+            StaticType.PlanetData(name, size, resource, batiments, planetCoord, defenses, ships,
+                    constructionBat, constructionShips, constructionDef)
         }.toCollection(mutableListOf())
     }
 
@@ -247,7 +249,8 @@ object DataBaseReads {
     }
 
     fun GalaxyInfo(): Unit {
-        mDataBaseReference.child("galaxy").addListenerForSingleValueEvent(object : ValueEventListener {
+        mDataBaseReference.child("galaxy").addListenerForSingleValueEvent(object :
+                ValueEventListener {
             override fun onCancelled(dError: DatabaseError?) {
                 println("loadPost:onCancelled ${dError?.toException()}")
             }
@@ -257,7 +260,6 @@ object DataBaseReads {
                     val galaxy = it.key.toInt()
                     it.children.map {
                         val pos = it.key.toInt()
-                        println(it.ref)
                         val player = it.child("pseudo").value as String
                         val namePlanet = it.child("name").value as String
                         Pair(Pair(galaxy, pos), Pair(player, namePlanet))
@@ -271,25 +273,26 @@ object DataBaseReads {
 
     fun disableButton() {
         for (planet in 0..UserData.planets.size) {
-            mDataBaseReference.child("users/${UserData.uid}/planets/$planet/construction/")
-                    .addListenerForSingleValueEvent(object : ValueEventListener {
-                        override fun onDataChange(p0: DataSnapshot?) {
-                            p0?.children?.forEach {
-                                val superEnum = when (it.key) {
-                                    "batiments" -> SuperEnum.BUILDING
-                                    "defenses" -> SuperEnum.DEFENSE
-                                    "ships" -> SuperEnum.SHIP
-                                    else -> null
-                                }
-                                UserData.disableButton[Pair(planet, superEnum!!)] = it.childrenCount != 0L
-                            }
-
+            mDataBaseReference.child(
+                    "users/${UserData.uid}/planets/$planet/construction/").addListenerForSingleValueEvent(object :
+                    ValueEventListener {
+                override fun onDataChange(p0: DataSnapshot?) {
+                    p0?.children?.forEach {
+                        val superEnum = when (it.key) {
+                            "batiments" -> SuperEnum.BUILDING
+                            "defenses" -> SuperEnum.DEFENSE
+                            "ships" -> SuperEnum.SHIP
+                            else -> null
                         }
+                        UserData.disableButton[Pair(planet, superEnum!!)] = it.childrenCount != 0L
+                    }
 
-                        override fun onCancelled(p0: DatabaseError?) {
-                            Log.e("FireBase", "The read failed: " + p0?.message)
-                        }
-                    })
+                }
+
+                override fun onCancelled(p0: DatabaseError?) {
+                    Log.e("FireBase", "The read failed: " + p0?.message)
+                }
+            })
         }
 
     }

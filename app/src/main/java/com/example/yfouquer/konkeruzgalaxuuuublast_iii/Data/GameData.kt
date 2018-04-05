@@ -16,10 +16,10 @@ object GameData {
     var techs = mutableListOf<TechData>()
     var ships = mutableListOf<ShipData>()
 
-    var galaxyMap = mutableMapOf<Pair<Int, Int>,Pair<String,String>>()
+    var galaxyMap = mutableMapOf<Pair<Int, Int>, Pair<String, String>>()
 
-    var datas = hashMapOf("BuildData" to buildings, "DefData" to defenses,
-            "TechData" to techs, "ShipData" to ships)
+    var datas = hashMapOf("BuildData" to buildings, "DefData" to defenses, "TechData" to techs,
+            "ShipData" to ships)
 
 
     fun add(data: Data) {

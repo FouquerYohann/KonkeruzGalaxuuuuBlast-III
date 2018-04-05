@@ -23,7 +23,7 @@
             android:text="1" />
 
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="7dp"
             android:layout_weight="5"
@@ -31,38 +31,40 @@
             android:orientation="vertical">
 
             <TextView
-                android:id="@+id/ownerName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@{player}" />
 
             <TextView
-                android:id="@+id/planetName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@{planetName}" />
         </LinearLayout>
 
-        <Button
-            android:id="@+id/systemButton1"
+        <ImageButton
+            android:id="@+id/colonize"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="1" />
+            android:contentDescription="coucou"
+            android:src="@drawable/ic_add_black_18dp"/>
 
-        <Button
-            android:id="@+id/systemButton2"
+        <ImageButton
+            android:id="@+id/spy"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="2" />
+            android:contentDescription="coucou"
+            android:src="@drawable/ic_explore_black_18dp"/>
 
-        <Button
-            android:id="@+id/systemButton3"
+        <ImageButton
+            android:id="@+id/attack"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="3" />
+            android:contentDescription="coucou"
+            android:src="@drawable/target"/>
+
     </LinearLayout>
 
 </layout>

@@ -38,4 +38,22 @@ object DataBaseWrites {
     fun setMaj() {
         databaseReference.child("users/" + UserData.uid + "/info/maj").setValue(true)
     }
+
+    fun writesToLaunch(to: StaticType.PlanetCoord, objectif: String, planet: Int,
+                       mapVesselValue: MutableMap<String, Int>) {
+
+        if (mapVesselValue.isEmpty()) {
+            return
+        }
+        val mapVesselVal = mapVesselValue.filter { it.value !=0 }.toMap(mutableMapOf())
+
+
+        val objectToAdd = mutableMapOf<String,Any>()
+        objectToAdd["dest"] = hashMapOf("pos" to to.pos, "sys" to to.system)
+        objectToAdd["goal"] = objectif
+        objectToAdd["ships"] = mapVesselVal
+        objectToAdd["travelTime"] = calculEngine.travelTimeCalc(UserData.planets[planet].coord, to)
+
+        val key = databaseReference.child("users/${UserData.uid}/planets/$planet/toLaunch").setValue(objectToAdd)
+    }
 }

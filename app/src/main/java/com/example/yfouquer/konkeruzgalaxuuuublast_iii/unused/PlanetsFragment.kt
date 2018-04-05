@@ -10,21 +10,21 @@ import android.widget.TextView
 import com.example.yfouquer.konkeruzgalaxuuuublast_iii.Data.UserData
 import com.example.yfouquer.konkeruzgalaxuuuublast_iii.R
 
-class PlanetsFragment :Fragment(){
+class PlanetsFragment : Fragment() {
 
     companion object {
-        fun newInstance(planet:Int): PlanetsFragment {
+        fun newInstance(planet: Int): PlanetsFragment {
             val planetsFragment = PlanetsFragment()
             val arg = Bundle()
-            arg.putInt("planet",planet)
-            planetsFragment.arguments =arg
+            arg.putInt("planet", planet)
+            planetsFragment.arguments = arg
             return planetsFragment
         }
     }
 
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?,
                               savedInstanceState: Bundle?): View {
-        val view  = inflater!!.inflate(R.layout.planet_view,container,false)
+        val view = inflater!!.inflate(R.layout.planet_view, container, false)
         val planet = arguments.getInt("planet")
         val text = view.findViewById<TextView>(R.id.title_planet)
         val btc = view.findViewById<TextView>(R.id.btc)
@@ -33,17 +33,17 @@ class PlanetsFragment :Fragment(){
 
 
         text.text = UserData.planets[planet].name
-        btc.text=UserData.planets[planet].ressource.btc.toString()
-        eth.text=UserData.planets[planet].ressource.eth.toString()
+        btc.text = UserData.planets[planet].ressource.btc.toString()
+        eth.text = UserData.planets[planet].ressource.eth.toString()
 
         val imageId = when (planet) {
             0 -> R.drawable.planet_0
             1 -> R.drawable.planet_1
             2 -> R.drawable.planet_2
-            else -> R.drawable.antoine_mini
+            else -> R.mipmap.antoine_mini
         }
 
-        planetView.setImageDrawable(resources.getDrawable(imageId,null))
+        planetView.setImageDrawable(resources.getDrawable(imageId, null))
 
         return view
     }

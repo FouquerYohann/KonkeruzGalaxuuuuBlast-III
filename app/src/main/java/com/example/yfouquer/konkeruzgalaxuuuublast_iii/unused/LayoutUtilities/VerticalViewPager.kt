@@ -9,18 +9,18 @@ import android.view.View
 /**
  * Created by yfouquer on 13/03/18.
  */
-class VerticalViewPager: ViewPager{
+class VerticalViewPager : ViewPager {
 
-    constructor(context: Context) : super(context,null)
-    constructor(context: Context,attributeSet: AttributeSet) : super(context,attributeSet)
+    constructor(context: Context) : super(context, null)
+    constructor(context: Context, attributeSet: AttributeSet) : super(context, attributeSet)
 
     init {
         setPageTransformer(true, VerticalPageTransformer())
         overScrollMode = View.OVER_SCROLL_NEVER
     }
 
-    private fun swapXY(e:MotionEvent) : MotionEvent {
-        e.setLocation((e.y/height)*width,(e.x/width)*height)
+    private fun swapXY(e: MotionEvent): MotionEvent {
+        e.setLocation((e.y / height) * width, (e.x / width) * height)
         return e
     }
 

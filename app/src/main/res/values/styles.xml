@@ -14,5 +14,9 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <style name="AppCompatAlertDialogStyle" parent="android:Theme.Dialog">
+        <item name="android:windowBackground">@drawable/shadow_background</item>
+        <item name="android:backgroundDimEnabled">false</item>
+    </style>
 
 </resources>
