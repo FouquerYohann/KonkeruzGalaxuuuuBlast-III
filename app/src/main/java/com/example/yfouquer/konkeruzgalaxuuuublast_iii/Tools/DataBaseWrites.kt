@@ -6,9 +6,6 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.storage.FirebaseStorage
 
-/**
- * Created by yfouquer on 15/03/18.
- */
 object DataBaseWrites {
     var mDataBase: FirebaseDatabase = FirebaseDatabase.getInstance()
     var databaseReference = mDataBase.reference
@@ -17,7 +14,7 @@ object DataBaseWrites {
 
     var mAuth: FirebaseAuth = FirebaseAuth.getInstance()
 
-    fun writesToBuilding(planet: Int, data: SuperEnum, ref: Int, nb: Int?): Unit {
+    fun writesToBuilding(planet: Int, data: SuperEnum, ref: Int, nb: Int?) {
         val s = when (data) {
             SuperEnum.BUILDING -> "batiments"
             SuperEnum.SHIP -> "ships"
@@ -45,15 +42,16 @@ object DataBaseWrites {
         if (mapVesselValue.isEmpty()) {
             return
         }
-        val mapVesselVal = mapVesselValue.filter { it.value !=0 }.toMap(mutableMapOf())
+        val mapVesselVal = mapVesselValue.filter { it.value != 0 }.toMap(mutableMapOf())
 
 
-        val objectToAdd = mutableMapOf<String,Any>()
+        val objectToAdd = mutableMapOf<String, Any>()
         objectToAdd["dest"] = hashMapOf("pos" to to.pos, "sys" to to.system)
         objectToAdd["goal"] = objectif
         objectToAdd["ships"] = mapVesselVal
         objectToAdd["travelTime"] = calculEngine.travelTimeCalc(UserData.planets[planet].coord, to)
 
-        val key = databaseReference.child("users/${UserData.uid}/planets/$planet/toLaunch").setValue(objectToAdd)
+        databaseReference.child("users/${UserData.uid}/planets/$planet/toLaunch").setValue(
+                objectToAdd)
     }
 }

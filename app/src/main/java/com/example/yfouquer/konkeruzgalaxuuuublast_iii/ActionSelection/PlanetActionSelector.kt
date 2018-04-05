@@ -18,17 +18,17 @@ import kotlinx.android.synthetic.main.parent_action_selector.view.*
 /**
  * Created by yfouquer on 13/03/18. modified by aescriou later
  */
-class PlanetActionSelector(val applicationContext: Context, val to:StaticType.PlanetCoord, val objectif: String) :
+class PlanetActionSelector(val applicationContext: Context, val to: StaticType.PlanetCoord,
+                           val objectif: String) :
         RecyclerView.Adapter<PlanetActionSelector.PlanetSelectionHolder>() {
 
     private var expandedPosition: Int = -1
 
     private var holderSet = mutableSetOf<PlanetSelectionHolder>()
 
-    fun hasBeenAccepted(){
-        holderSet.forEach{ (it.recyclerView.adapter as VesselActionAdapter).gogo()}
+    fun hasBeenAccepted() {
+        holderSet.forEach { (it.recyclerView.adapter as VesselActionAdapter).gogo() }
     }
-
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PlanetSelectionHolder {
@@ -47,7 +47,8 @@ class PlanetActionSelector(val applicationContext: Context, val to:StaticType.Pl
         holder.bind(BR.planetParentSelection, UserData.planets[position])
 
         holder.recyclerView.layoutManager = LinearLayoutManager(applicationContext)
-        holder.recyclerView.adapter = VesselActionAdapter(applicationContext,to,objectif, position)
+        holder.recyclerView.adapter = VesselActionAdapter(applicationContext, to, objectif,
+                position)
 
     }
 

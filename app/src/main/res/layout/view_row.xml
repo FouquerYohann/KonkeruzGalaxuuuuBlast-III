@@ -46,7 +46,7 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="5dp"
                     android:gravity="center_vertical"
-                    android:text="@{item.description}"
+                    android:text="@{item.name}"
                     android:textAlignment="center" />
 
 
@@ -66,9 +66,8 @@
                 android:layout_height="match_parent"
                 android:layout_margin="5dp"
                 android:layout_weight="2"
-                android:autoText="false"
                 android:text='@{"Btc : "+Long.toString(btc_prix)+"\n Eth : "+Long.toString(eth_prix)}'
-                android:textSize="10sp" />
+                android:textSize="12sp" />
 
         </LinearLayout>
 

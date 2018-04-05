@@ -2,14 +2,12 @@ package com.example.yfouquer.konkeruzgalaxuuuublast_iii.Data
 
 import com.example.yfouquer.konkeruzgalaxuuuublast_iii.Tools.StaticType
 
-/**
- * Created by yfouquer on 12/03/18.
- */
 object UserData {
     lateinit var uid: String
     lateinit var info: StaticType.UserInfo
     lateinit var planets: MutableList<StaticType.PlanetData>
     lateinit var techs: MutableList<Pair<Int, Long>>
+    lateinit var flights: MutableList<StaticType.FlightData>
 
     var disableButton: MutableMap<Pair<Int, SuperEnum>, Boolean> = hashMapOf()
 

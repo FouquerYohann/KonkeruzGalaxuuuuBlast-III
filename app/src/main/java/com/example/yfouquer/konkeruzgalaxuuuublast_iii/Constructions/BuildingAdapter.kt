@@ -31,14 +31,14 @@ class BuildingAdapter(private var planet: Int, private var mDataset: List<Static
 
 
         holder.bind(BR.level, when (mDataset[0]) {
-            is BuildData ->
-                "Level " + (UserData.planets[planet].batiments.firstOrNull { it.first == position }?.second ?: "0")
-            is TechData ->
-                "Level " + (UserData.techs.firstOrNull { it.first == position }?.second ?: "0")
-            is ShipData ->
-                "Number " + (UserData.planets[planet].ships.firstOrNull { it.first == position }?.second ?: "0")
-            is DefData ->
-                "Number " + (UserData.planets[planet].defenses.firstOrNull { it.first == position }?.second ?: "0")
+            is BuildData -> "Level " + (UserData.planets[planet].batiments.firstOrNull { it.first == position }?.second
+                    ?: "0")
+            is TechData -> "Level " + (UserData.techs.firstOrNull { it.first == position }?.second
+                    ?: "0")
+            is ShipData -> "Number " + (UserData.planets[planet].ships.firstOrNull { it.first == position }?.second
+                    ?: "0")
+            is DefData -> "Number " + (UserData.planets[planet].defenses.firstOrNull { it.first == position }?.second
+                    ?: "0")
             else -> throw IllegalArgumentException("Data Type Not Found")
         })
 

@@ -34,8 +34,7 @@ class PlanetActivity : AppCompatActivity() {
         recycle.layoutManager = LinearLayoutManager(this)
         recycle.adapter = PlanetAdapter(UserData.planets, applicationContext)
 
-        val mDividerItemDecoration = DividerItemDecoration(recycle.context,
-                RecyclerView.VERTICAL)
+        val mDividerItemDecoration = DividerItemDecoration(recycle.context, RecyclerView.VERTICAL)
         recycle.addItemDecoration(mDividerItemDecoration)
 
         refresh.setOnClickListener {

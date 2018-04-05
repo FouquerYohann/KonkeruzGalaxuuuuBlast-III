@@ -95,12 +95,13 @@ class LoginActivity : AppCompatActivity() {
     class DownloadData(private val applicationContext: Context) : AsyncTask<Void, Void, String>() {
 
         override fun doInBackground(vararg p0: Void?): String {
+            DataBaseReads.GalaxyInfo()
             DataBaseReads.buildingData(applicationContext)
             DataBaseReads.defenseData(applicationContext)
             DataBaseReads.shipData(applicationContext)
             DataBaseReads.techData(applicationContext)
             DataBaseReads.userData(UserData.uid)
-            DataBaseReads.GalaxyInfo()
+            DataBaseReads.flightsInfo()
             return "ok"
         }
     }

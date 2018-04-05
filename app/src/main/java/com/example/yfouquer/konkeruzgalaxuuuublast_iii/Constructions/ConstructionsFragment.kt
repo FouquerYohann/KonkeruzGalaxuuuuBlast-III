@@ -43,8 +43,7 @@ class ConstructionsFragment : Fragment() {
         recyclerView.adapter = BuildingAdapter(planet, listData!!, activity)
 
 
-        val mDividerItemDecoration = DividerItemDecoration(recyclerView.context,
-                VERTICAL)
+        val mDividerItemDecoration = DividerItemDecoration(recyclerView.context, VERTICAL)
         recyclerView.addItemDecoration(mDividerItemDecoration)
 
         return view

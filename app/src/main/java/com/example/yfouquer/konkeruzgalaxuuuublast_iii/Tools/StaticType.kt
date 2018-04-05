@@ -1,8 +1,5 @@
 package com.example.yfouquer.konkeruzgalaxuuuublast_iii.Tools
 
-/**
- * Created by yfouquer on 06/03/18.
- */
 object StaticType {
     data class Cost(val btc: Long, val eth: Long, val time: Long)
     data class ShipStats(val damage: Long, val life: Long, val contenance: Long)
@@ -29,6 +26,8 @@ object StaticType {
     data class TechData(override val name: String, override val description: String,
                         override val image: String, override val cost: Cost) : Data()
 
+    data class FlightData(val from: PlanetCoord, val to: PlanetCoord, val objectif: String,
+                          val vessels: MutableMap<Int, Int>, val captainN: String, val since: Long)
 
     data class PlanetCoord(val pos: Int, val system: Int)
     data class PlanetRessource(val btc: Long, val eth: Long)

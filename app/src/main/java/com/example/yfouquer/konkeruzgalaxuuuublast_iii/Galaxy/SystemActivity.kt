@@ -26,7 +26,7 @@ class SystemActivity : AppCompatActivity(), SeekBar.OnSeekBarChangeListener {
 
     override fun onStopTrackingTouch(p0: SeekBar?) {
         val systemPlanetListView = findViewById<RecyclerView>(R.id.system_planet_list_view)
-        systemPlanetListView.adapter = SystemAdapter(applicationContext,this,system)
+        systemPlanetListView.adapter = SystemAdapter(applicationContext, this, system)
     }
 
 
@@ -34,14 +34,14 @@ class SystemActivity : AppCompatActivity(), SeekBar.OnSeekBarChangeListener {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.system_explorer)
 
-        val curSystem = intent.getIntExtra("currentSystem",0)
+        val curSystem = intent.getIntExtra("currentSystem", 0)
 
         seekBar.setOnSeekBarChangeListener(this)
         seekBar.progress = curSystem
 
         val systemPlanetListView = findViewById<RecyclerView>(R.id.system_planet_list_view)
         systemPlanetListView.layoutManager = LinearLayoutManager(this)
-        systemPlanetListView.adapter = SystemAdapter(applicationContext,this,system)
+        systemPlanetListView.adapter = SystemAdapter(applicationContext, this, system)
 
         val mDividerItemDecoration = DividerItemDecoration(systemPlanetListView.context,
                 RecyclerView.VERTICAL)

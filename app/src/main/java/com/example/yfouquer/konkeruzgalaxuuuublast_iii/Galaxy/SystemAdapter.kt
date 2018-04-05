@@ -20,10 +20,6 @@ import com.example.yfouquer.konkeruzgalaxuuuublast_iii.databinding.SystemPlanetV
 import kotlinx.android.synthetic.main.system_planet_view.view.*
 
 
-/**
- * Created by Yohann on 17/03/2018.
- */
-
 class SystemAdapter(val applicationContext: Context, val activity: SystemActivity,
                     val system: Int) : RecyclerView.Adapter<SystemAdapter.SystemViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): SystemViewHolder {
@@ -48,15 +44,14 @@ class SystemAdapter(val applicationContext: Context, val activity: SystemActivit
 
 
         holder?.colonize?.setOnClickListener {
-            val builder = AlertDialog.Builder(activity, R.style.Theme_AppCompat_Light_DarkActionBar)
+            val builder = AlertDialog.Builder(activity, R.style.Base_Theme_AppCompat_Dialog_Alert)
             val dialogView = LayoutInflater.from(applicationContext).inflate(
                     R.layout.parent_action_selector, null)
 
 
-
             val recycle = dialogView.findViewById<RecyclerView>(R.id.planetRecyclerAction)
             recycle.layoutManager = LinearLayoutManager(applicationContext)
-            recycle.adapter = PlanetActionSelector(applicationContext,to,"COL")
+            recycle.adapter = PlanetActionSelector(applicationContext, to, "colonize")
 
             val mDividerItemDecoration = DividerItemDecoration(recycle.context,
                     RecyclerView.VERTICAL)
@@ -72,14 +67,14 @@ class SystemAdapter(val applicationContext: Context, val activity: SystemActivit
                 (recycle.adapter as PlanetActionSelector).hasBeenAccepted()
                 dialogInterface.dismiss()
             })
-            var create = builder.create()
+            val create = builder.create()
             val display = (applicationContext.getSystemService(
                     Context.WINDOW_SERVICE) as WindowManager).defaultDisplay
 
-            create.window.setLayout((display.width*0.8).toInt(), (display.height*0.8).toInt())
+            create.window.setLayout((display.width * 0.8).toInt(), (display.height * 0.8).toInt())
             create.show()
         }
-        holder?.spy?.setOnClickListener {  }
+        holder?.spy?.setOnClickListener { }
         holder?.attack?.setOnClickListener { }
 
 

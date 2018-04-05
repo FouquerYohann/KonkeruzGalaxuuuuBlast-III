@@ -30,6 +30,7 @@ class VesselActionAdapter(private val applicationContext: Context, val to: Stati
     val mapVesselValue = mutableMapOf<String, Int>()
 
     fun gogo() {
+        println("DataBaseWrites.writesToLaunch($to, $objectif, $planet, $mapVesselValue)")
         DataBaseWrites.writesToLaunch(to, objectif, planet, mapVesselValue)
     }
 

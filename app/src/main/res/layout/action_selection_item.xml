@@ -16,6 +16,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:baselineAligned="true"
         android:orientation="horizontal">
 
 
@@ -29,13 +30,14 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="30dp"
-                android:text="@{ship.name}" />
+                android:text="@{ship.name}"
+                android:textColor="#fff" />
 
             <ImageView
                 android:id="@+id/imageVessel"
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
-                android:contentDescription="coucou"
+                android:contentDescription="@string/generique_description"
                 android:src="@mipmap/antoine_mini" />
 
         </LinearLayout>
@@ -59,7 +61,7 @@
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:padding="10dp"
-                android:text="0"
+                android:text="@string/not_here"
                 android:textStyle="bold" />
 
         </LinearLayout>

@@ -30,7 +30,8 @@ class ConstructionActivity() : AppCompatActivity() {
         binding.setVariable(BR.planet, UserData.planets[planet])
 
         goToSystem.setOnClickListener {
-            val intent = Intent(this,SystemActivity::class.java).putExtra("currentSystem",UserData.planets[planet].coord.system)
+            val intent = Intent(this, SystemActivity::class.java).putExtra("currentSystem",
+                    UserData.planets[planet].coord.system)
             startActivity(intent)
         }
 

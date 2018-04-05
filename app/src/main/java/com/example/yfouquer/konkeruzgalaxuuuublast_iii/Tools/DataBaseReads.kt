@@ -191,6 +191,7 @@ object DataBaseReads {
             override fun onDataChange(p0: DataSnapshot?) {
                 userData(userId)
                 GalaxyInfo()
+                flightsInfo()
             }
         })
     }
@@ -243,12 +244,59 @@ object DataBaseReads {
         }.toCollection(mutableListOf())
     }
 
+
+    fun flightsInfo() {
+        mDataBaseReference.child("flights/list").addListenerForSingleValueEvent(object :
+                ValueEventListener {
+            override fun onDataChange(ds: DataSnapshot) {
+                try {
+                    val mutableListOf = mutableListOf<StaticType.FlightData>()
+                    ds.children.forEach {
+                        if (!(it.key as String).equals("toFill")) {
+                            var position = (it.child("dest/pos").value as Long).toInt()
+                            var system = (it.child("dest/sys").value as Long).toInt()
+                            val to = StaticType.PlanetCoord(position, system)
+                            position = (it.child("origin/pos").value as Long).toInt()
+                            system = (it.child("origin/sys").value as Long).toInt()
+                            val from = StaticType.PlanetCoord(position, system)
+
+                            val UserPlanetCoord = UserData.planets.map { it.coord }.toCollection(
+                                    mutableListOf())
+
+                            if (UserPlanetCoord.contains(to) || UserPlanetCoord.contains(from)) {
+                                val captain = it.child("captainName").value as String
+                                val since = it.child("since").value as Long
+                                val objectif = it.child("goal").value as String
+
+                                val mapVessel = it.child("ships").children.map {
+                                    Pair(it.key.toInt(), (it.value as Long).toInt())
+                                }.toMap(mutableMapOf())
+                                mutableListOf.add(
+                                        StaticType.FlightData(from, to, objectif, mapVessel,
+                                                captain, since))
+                            }
+                        }
+                    }
+                    UserData.flights = mutableListOf
+                } catch (e: UninitializedPropertyAccessException) {
+                    println("Unitialize property retrying after delay")
+                    Thread.sleep(100)
+                    flightsInfo()
+                }
+            }
+
+            override fun onCancelled(dError: DatabaseError?) {
+                println("loadPost:onCancelled ${dError?.toException()}")
+            }
+        })
+    }
+
     private fun infofrom(ds: DataSnapshot): StaticType.UserInfo {
         return StaticType.UserInfo(ds.child("lastConnection").value as Long,
                 ds.child("pseudo").value as String)
     }
 
-    fun GalaxyInfo(): Unit {
+    fun GalaxyInfo() {
         mDataBaseReference.child("galaxy").addListenerForSingleValueEvent(object :
                 ValueEventListener {
             override fun onCancelled(dError: DatabaseError?) {

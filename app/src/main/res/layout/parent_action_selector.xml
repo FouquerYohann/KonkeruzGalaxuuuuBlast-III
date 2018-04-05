@@ -16,8 +16,8 @@
             android:layout_height="wrap_content"
             android:text="@{planetParentSelection.name}"
             android:textAlignment="center"
-            android:textColor="#000"
-            android:textSize="20sp"
+            android:textColor="#fff"
+            android:textSize="40sp"
             android:textStyle="bold"/>
 
         <android.support.v7.widget.RecyclerView

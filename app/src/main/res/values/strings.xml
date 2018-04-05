@@ -30,4 +30,7 @@
     <string name="descBtc">imageBtc</string>
     <string name="descEth">descEth</string>
     <string name="all_my_planet">All my planet</string>
+    <string name="les_vols_en_cours">Les Vols En Cours !!!</string>
+    <string name="generique_description">generique description</string>
+    <string name="not_here">not here</string>
 </resources>
