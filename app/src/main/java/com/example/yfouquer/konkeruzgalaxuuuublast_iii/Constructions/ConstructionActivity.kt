@@ -10,7 +10,7 @@ import com.example.yfouquer.konkeruzgalaxuuuublast_iii.BR
 import com.example.yfouquer.konkeruzgalaxuuuublast_iii.Data.UserData
 import com.example.yfouquer.konkeruzgalaxuuuublast_iii.Galaxy.SystemActivity
 import com.example.yfouquer.konkeruzgalaxuuuublast_iii.R
-import com.example.yfouquer.konkeruzgalaxuuuublast_iii.Tools.DataBaseReads
+import com.example.yfouquer.konkeruzgalaxuuuublast_iii.Tools.DataBaseWrites
 import kotlinx.android.synthetic.main.construction_activity.*
 
 
@@ -45,7 +45,7 @@ class ConstructionActivity() : AppCompatActivity() {
         viewPager.currentItem = 0
 
         refresher.setOnClickListener {
-            DataBaseReads.userData(UserData.uid)
+            DataBaseWrites.setMaj()
 
         }
     }
