@@ -1,5 +1,6 @@
 package com.example.yfouquer.konkeruzgalaxuuuublast_iii.Planets
 
+import android.content.Intent
 import android.os.Bundle
 import android.support.v4.view.GestureDetectorCompat
 import android.support.v7.app.AppCompatActivity
@@ -8,6 +9,8 @@ import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.MotionEvent
 import com.example.yfouquer.konkeruzgalaxuuuublast_iii.Data.UserData
+import com.example.yfouquer.konkeruzgalaxuuuublast_iii.Flight.FlightActivity
+import com.example.yfouquer.konkeruzgalaxuuuublast_iii.Galaxy.SystemActivity
 import com.example.yfouquer.konkeruzgalaxuuuublast_iii.R
 import com.example.yfouquer.konkeruzgalaxuuuublast_iii.Tools.DataBaseReads
 import com.example.yfouquer.konkeruzgalaxuuuublast_iii.Utilities.OnSwipeListener
@@ -27,7 +30,6 @@ class PlanetActivity : AppCompatActivity() {
         DataBaseReads.autoRefreshUser(UserData.uid)
 
         gestureDetector = GestureDetectorCompat(this, OnSwipeListener(this))
-//        DataBaseReads.disableButton()
 
         val recycle = findViewById<RecyclerView>(R.id.planetListView)
 
@@ -40,6 +42,17 @@ class PlanetActivity : AppCompatActivity() {
         refresh.setOnClickListener {
             DataBaseReads.userData(UserData.uid)
         }
+
+        galaxy_explorer.setOnClickListener {
+            startActivity(Intent(applicationContext, SystemActivity::class.java))
+        }
+        flights_explorer.setOnClickListener {
+            startActivity(Intent(applicationContext, FlightActivity::class.java))
+        }
+    }
+
+    override fun onBackPressed() {
+
     }
 
     override fun onTouchEvent(event: MotionEvent?): Boolean {
