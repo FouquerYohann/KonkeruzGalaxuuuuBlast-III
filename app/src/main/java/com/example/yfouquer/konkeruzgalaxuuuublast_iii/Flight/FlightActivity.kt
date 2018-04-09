@@ -6,6 +6,7 @@ import android.support.v7.widget.DividerItemDecoration
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import com.example.yfouquer.konkeruzgalaxuuuublast_iii.R
+import com.example.yfouquer.konkeruzgalaxuuuublast_iii.Tools.DataBaseWrites
 import kotlinx.android.synthetic.main.flight_activity.*
 
 class FlightActivity : AppCompatActivity() {
@@ -20,5 +21,8 @@ class FlightActivity : AppCompatActivity() {
                 RecyclerView.VERTICAL)
         flightRecycler.addItemDecoration(mDividerItemDecoration)
 
+        refresh.setOnClickListener {
+            DataBaseWrites.setMaj()
+        }
     }
 }

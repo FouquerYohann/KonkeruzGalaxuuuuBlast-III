@@ -33,6 +33,12 @@ class FlightAdapter : RecyclerView.Adapter<FlightAdapter.FlightViewHolder>() {
 
         val timeLeft = Date().time - UserData.flights[position].since
 
+
+        println("Date.time = ${Date().time}")
+        println("UserData.flights[position].since = ${UserData.flights[position].since}")
+
+
+
         holder.bind(BR.since, formatDate(timeLeft))
 
     }

@@ -34,6 +34,7 @@ object DataBaseWrites {
 
     fun setMaj() {
         databaseReference.child("users/${UserData.uid}/info/maj").setValue(true)
+        databaseReference.child("flights/maj").setValue(true)
     }
 
     fun writesToLaunch(to: StaticType.PlanetCoord, objectif: String, planet: Int,
