@@ -6,7 +6,9 @@ import android.support.v7.widget.DividerItemDecoration
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.widget.SeekBar
+import com.example.yfouquer.konkeruzgalaxuuuublast_iii.Data.UserData
 import com.example.yfouquer.konkeruzgalaxuuuublast_iii.R
+import com.example.yfouquer.konkeruzgalaxuuuublast_iii.Tools.DataBaseReads
 import kotlinx.android.synthetic.main.system_explorer.*
 
 /**
@@ -22,6 +24,7 @@ class SystemActivity : AppCompatActivity(), SeekBar.OnSeekBarChangeListener {
     }
 
     override fun onStartTrackingTouch(p0: SeekBar?) {
+        DataBaseReads.autoRefreshUser(UserData.uid)
     }
 
     override fun onStopTrackingTouch(p0: SeekBar?) {

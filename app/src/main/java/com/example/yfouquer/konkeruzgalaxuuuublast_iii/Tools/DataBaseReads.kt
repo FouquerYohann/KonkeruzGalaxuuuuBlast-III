@@ -304,7 +304,7 @@ object DataBaseReads {
             }
 
             override fun onDataChange(ds: DataSnapshot) {
-                GameData.galaxyMap = ds.children.flatMap {
+                val superMap = ds.children.flatMap {
                     val galaxy = it.key.toInt()
                     it.children.map {
                         val pos = it.key.toInt()
@@ -314,6 +314,7 @@ object DataBaseReads {
                     }
 
                 }.toMap(HashMap())
+                GameData.galaxyMap = superMap
             }
         })
     }
